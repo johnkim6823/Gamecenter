@@ -10,13 +10,96 @@
             font-family: 'Malgun Gothic', 'Segoe UI', sans-serif;
             background: #f5f5f5;
             color: #333;
+            transition: all 0.3s;
         }
 
-        /* 인터파크 스타일 헤더 */
+        /* ===== 플랫폼 테마 변수 ===== */
+        :root {
+            --primary: #502b6e;
+            --primary-light: #f3e5f5;
+            --accent: #e91e63;
+            --header-bg: #fff;
+            --header-border: #502b6e;
+            --nav-bg: #502b6e;
+        }
+        body.theme-ticketlink {
+            --primary: #e5001b;
+            --primary-light: #ffeaed;
+            --accent: #1a73e8;
+            --header-bg: #fff;
+            --header-border: #e5001b;
+            --nav-bg: #1a1a1a;
+        }
+        body.theme-melon {
+            --primary: #00c73c;
+            --primary-light: #e8f9ed;
+            --accent: #ff5252;
+            --header-bg: #fff;
+            --header-border: #00c73c;
+            --nav-bg: #2d2d2d;
+        }
+
+        /* ===== 플랫폼 선택 화면 ===== */
+        .platform-select {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(135deg, #1a1a2e, #16213e, #0f3460);
+            color: #fff;
+            padding: 2rem;
+        }
+        .platform-select h1 {
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
+        }
+        .platform-select .sub { color: #aaa; margin-bottom: 3rem; }
+        .platform-cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+            gap: 1.5rem;
+            max-width: 900px;
+            width: 100%;
+        }
+        .platform-card {
+            background: rgba(255,255,255,0.06);
+            border: 2px solid rgba(255,255,255,0.1);
+            border-radius: 16px;
+            padding: 2rem;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        .platform-card:hover {
+            transform: translateY(-6px);
+            background: rgba(255,255,255,0.12);
+            box-shadow: 0 15px 30px rgba(0,0,0,0.3);
+        }
+        .platform-card .icon { font-size: 3rem; margin-bottom: 1rem; }
+        .platform-card h2 { font-size: 1.3rem; margin-bottom: 0.3rem; }
+        .platform-card p { color: #aaa; font-size: 0.85rem; }
+        .platform-card .color-bar {
+            height: 4px;
+            border-radius: 2px;
+            margin-top: 1rem;
+        }
+        .back-home {
+            margin-top: 2rem;
+            color: #aaa;
+            text-decoration: none;
+            font-size: 0.9rem;
+        }
+        .back-home:hover { color: #fff; }
+
+        /* ===== 공통 레이아웃 ===== */
+        .app { display: none; }
+        .app.show { display: block; }
+
         .top-bar {
             background: #fff;
             border-bottom: 1px solid #e0e0e0;
-            padding: 8px 0;
+            padding: 6px 0;
             font-size: 0.75rem;
             color: #888;
         }
@@ -27,12 +110,13 @@
             display: flex;
             justify-content: space-between;
         }
-        .top-bar a { color: #888; text-decoration: none; margin-left: 10px; }
+        .top-bar a { color: #888; text-decoration: none; cursor: pointer; }
+        .top-bar a:hover { color: var(--primary); }
 
         .header {
-            background: #fff;
-            border-bottom: 2px solid #502b6e;
-            padding: 0.8rem 0;
+            background: var(--header-bg);
+            border-bottom: 3px solid var(--header-border);
+            padding: 0.7rem 0;
         }
         .header .inner {
             max-width: 1200px;
@@ -47,31 +131,25 @@
             align-items: center;
             gap: 8px;
             text-decoration: none;
+            cursor: pointer;
         }
-        .logo-icon {
-            background: #502b6e;
-            color: #fff;
+        .logo-badge {
             padding: 4px 10px;
             border-radius: 4px;
             font-weight: bold;
-            font-size: 1.1rem;
+            font-size: 1rem;
+            color: #fff;
+            background: var(--primary);
         }
-        .logo-text {
+        .logo-name {
             font-size: 1.3rem;
             font-weight: bold;
-            color: #502b6e;
+            color: var(--primary);
         }
-        .logo-sub { color: #e91e63; font-size: 0.9rem; margin-left: 2px; }
-        .home-link {
-            color: #888;
-            text-decoration: none;
-            font-size: 0.85rem;
-        }
-        .home-link:hover { color: #502b6e; }
+        .logo-name .accent { color: var(--accent); }
 
         .nav-bar {
-            background: #502b6e;
-            padding: 0;
+            background: var(--nav-bg);
         }
         .nav-bar .inner {
             max-width: 1200px;
@@ -79,38 +157,34 @@
             display: flex;
         }
         .nav-item {
-            color: #fff;
+            color: rgba(255,255,255,0.8);
             padding: 10px 20px;
-            font-size: 0.9rem;
+            font-size: 0.85rem;
             cursor: pointer;
-            text-decoration: none;
             transition: background 0.2s;
         }
-        .nav-item:hover, .nav-item.active { background: rgba(255,255,255,0.15); }
+        .nav-item:hover, .nav-item.active { background: rgba(255,255,255,0.15); color: #fff; }
 
-        /* 메인 컨텐츠 */
         .main {
             max-width: 1200px;
             margin: 0 auto;
             padding: 1.5rem 1rem;
         }
 
-        /* 단계별 화면 */
         .step { display: none; }
         .step.active { display: block; }
 
-        /* 공연 목록 */
+        /* ===== 공연 배너 & 목록 ===== */
         .event-banner {
-            background: linear-gradient(135deg, #502b6e, #7b1fa2);
+            background: linear-gradient(135deg, var(--primary), var(--accent));
             border-radius: 8px;
             padding: 2rem;
             color: #fff;
             margin-bottom: 1.5rem;
             text-align: center;
         }
-        .event-banner h2 { font-size: 1.8rem; margin-bottom: 0.5rem; }
+        .event-banner h2 { font-size: 1.8rem; margin-bottom: 0.3rem; }
         .event-banner p { opacity: 0.8; }
-
         .event-list {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
@@ -135,21 +209,13 @@
             justify-content: center;
             font-size: 4rem;
         }
-        .event-info {
-            padding: 1rem;
-        }
-        .event-info h3 {
-            font-size: 1rem;
-            margin-bottom: 0.3rem;
-            white-space: nowrap;
-            overflow: hidden;
-            text-overflow: ellipsis;
-        }
+        .event-info { padding: 1rem; }
+        .event-info h3 { font-size: 0.95rem; margin-bottom: 0.3rem; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
         .event-info .venue { color: #888; font-size: 0.8rem; margin-bottom: 0.3rem; }
-        .event-info .date { color: #502b6e; font-size: 0.85rem; font-weight: bold; }
+        .event-info .date { color: var(--primary); font-size: 0.85rem; font-weight: bold; }
         .event-badge {
             display: inline-block;
-            background: #e91e63;
+            background: var(--accent);
             color: #fff;
             font-size: 0.7rem;
             padding: 2px 6px;
@@ -157,7 +223,7 @@
             margin-bottom: 0.3rem;
         }
 
-        /* 공연 상세 */
+        /* ===== 공연 상세 ===== */
         .detail-top {
             display: flex;
             gap: 2rem;
@@ -168,1303 +234,1066 @@
             margin-bottom: 1.5rem;
         }
         .detail-poster {
-            width: 250px;
-            height: 330px;
+            width: 250px; height: 330px;
             border-radius: 8px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 6rem;
-            flex-shrink: 0;
+            display: flex; align-items: center; justify-content: center;
+            font-size: 6rem; flex-shrink: 0;
         }
         .detail-info { flex: 1; }
-        .detail-info h2 { font-size: 1.5rem; margin-bottom: 0.8rem; }
-        .detail-table {
-            width: 100%;
-            font-size: 0.9rem;
-        }
-        .detail-table td {
-            padding: 6px 0;
-            vertical-align: top;
-        }
-        .detail-table td:first-child {
-            color: #888;
-            width: 80px;
-        }
+        .detail-info h2 { font-size: 1.4rem; margin-bottom: 0.8rem; }
+        .detail-table { width: 100%; font-size: 0.9rem; }
+        .detail-table td { padding: 5px 0; vertical-align: top; }
+        .detail-table td:first-child { color: #888; width: 80px; }
 
-        /* 날짜/회차 선택 */
-        .date-selector {
-            background: #fff;
-            padding: 1.5rem;
-            border-radius: 8px;
-            border: 1px solid #e0e0e0;
-            margin-bottom: 1.5rem;
+        .selector-panel {
+            background: #fff; padding: 1.5rem; border-radius: 8px;
+            border: 1px solid #e0e0e0; margin-bottom: 1.5rem;
         }
-        .date-selector h3 {
-            font-size: 1rem;
-            margin-bottom: 1rem;
-            padding-bottom: 0.5rem;
-            border-bottom: 2px solid #502b6e;
-            color: #502b6e;
+        .selector-panel h3 {
+            font-size: 1rem; margin-bottom: 1rem;
+            padding-bottom: 0.5rem; border-bottom: 2px solid var(--primary); color: var(--primary);
         }
-        .date-grid {
-            display: flex;
-            gap: 8px;
-            flex-wrap: wrap;
-            margin-bottom: 1rem;
+        .date-grid, .time-slots { display: flex; gap: 8px; flex-wrap: wrap; }
+        .date-grid { margin-bottom: 1rem; }
+        .sel-btn {
+            padding: 8px 16px; border: 1px solid #ddd; background: #fff;
+            border-radius: 6px; cursor: pointer; font-size: 0.85rem; transition: all 0.2s;
         }
-        .date-btn {
-            padding: 8px 16px;
-            border: 1px solid #ddd;
-            background: #fff;
-            border-radius: 6px;
-            cursor: pointer;
-            font-size: 0.85rem;
-            transition: all 0.2s;
-        }
-        .date-btn:hover { border-color: #502b6e; }
-        .date-btn.selected {
-            background: #502b6e;
-            color: #fff;
-            border-color: #502b6e;
-        }
-        .date-btn.soldout {
-            background: #f5f5f5;
-            color: #ccc;
-            cursor: not-allowed;
-            text-decoration: line-through;
-        }
-        .time-slots {
-            display: flex;
-            gap: 8px;
-            flex-wrap: wrap;
-        }
-        .time-btn {
-            padding: 8px 20px;
-            border: 1px solid #ddd;
-            background: #fff;
-            border-radius: 6px;
-            cursor: pointer;
-            font-size: 0.85rem;
-            transition: all 0.2s;
-        }
-        .time-btn:hover { border-color: #502b6e; }
-        .time-btn.selected {
-            background: #502b6e;
-            color: #fff;
-            border-color: #502b6e;
-        }
-        .time-btn .remaining {
-            display: block;
-            font-size: 0.7rem;
-            color: #e91e63;
-            margin-top: 2px;
-        }
-        .time-btn.selected .remaining { color: #ffcdd2; }
+        .sel-btn:hover { border-color: var(--primary); }
+        .sel-btn.selected { background: var(--primary); color: #fff; border-color: var(--primary); }
+        .sel-btn.soldout { background: #f5f5f5; color: #ccc; cursor: not-allowed; text-decoration: line-through; }
+        .sel-btn .remaining { display: block; font-size: 0.7rem; color: var(--accent); margin-top: 2px; }
+        .sel-btn.selected .remaining { color: rgba(255,255,255,0.7); }
 
-        /* 대기열 */
-        .queue-overlay {
-            display: none;
-            position: fixed;
-            top: 0; left: 0; right: 0; bottom: 0;
-            background: rgba(0,0,0,0.7);
-            z-index: 1000;
-            align-items: center;
-            justify-content: center;
+        /* ===== 대기열 ===== */
+        .overlay {
+            display: none; position: fixed; top: 0; left: 0; right: 0; bottom: 0;
+            background: rgba(0,0,0,0.7); z-index: 1000;
+            align-items: center; justify-content: center;
         }
-        .queue-overlay.show { display: flex; }
-        .queue-box {
-            background: #fff;
-            border-radius: 12px;
-            padding: 3rem;
-            text-align: center;
-            max-width: 450px;
-            width: 90%;
+        .overlay.show { display: flex; }
+        .overlay-box {
+            background: #fff; border-radius: 12px; padding: 2.5rem;
+            text-align: center; max-width: 460px; width: 90%;
         }
-        .queue-box h2 {
-            color: #502b6e;
-            margin-bottom: 1rem;
-        }
-        .queue-number {
-            font-size: 3rem;
-            font-weight: bold;
-            color: #e91e63;
-            margin: 1rem 0;
-        }
-        .queue-info {
-            color: #888;
-            font-size: 0.9rem;
-            margin-bottom: 1.5rem;
-        }
-        .progress-bar {
-            width: 100%;
-            height: 8px;
-            background: #eee;
-            border-radius: 4px;
-            overflow: hidden;
-            margin-bottom: 1rem;
-        }
-        .progress-fill {
-            height: 100%;
-            background: linear-gradient(90deg, #502b6e, #e91e63);
-            border-radius: 4px;
-            transition: width 0.5s;
-        }
+        .queue-number { font-size: 3rem; font-weight: bold; color: var(--accent); margin: 0.8rem 0; }
+        .queue-info { color: #888; font-size: 0.9rem; margin-bottom: 1rem; }
+        .progress-bar { width: 100%; height: 8px; background: #eee; border-radius: 4px; overflow: hidden; margin-bottom: 1rem; }
+        .progress-fill { height: 100%; background: linear-gradient(90deg, var(--primary), var(--accent)); border-radius: 4px; transition: width 0.5s; }
         .queue-warning {
-            background: #fff3e0;
-            border: 1px solid #ffe0b2;
-            border-radius: 6px;
-            padding: 0.8rem;
-            font-size: 0.8rem;
-            color: #e65100;
-            margin-top: 1rem;
+            background: #fff3e0; border: 1px solid #ffe0b2; border-radius: 6px;
+            padding: 0.8rem; font-size: 0.8rem; color: #e65100; margin-top: 1rem;
         }
 
-        /* 좌석 선택 */
+        /* ===== 좌석 선택 ===== */
         .seat-section {
-            background: #fff;
-            padding: 1.5rem;
-            border-radius: 8px;
-            border: 1px solid #e0e0e0;
+            background: #fff; padding: 1.5rem; border-radius: 8px; border: 1px solid #e0e0e0;
         }
         .seat-section h3 {
-            font-size: 1rem;
-            margin-bottom: 1rem;
-            padding-bottom: 0.5rem;
-            border-bottom: 2px solid #502b6e;
-            color: #502b6e;
+            font-size: 1rem; margin-bottom: 1rem;
+            padding-bottom: 0.5rem; border-bottom: 2px solid var(--primary); color: var(--primary);
         }
-        .grade-tabs {
-            display: flex;
-            gap: 8px;
-            margin-bottom: 1rem;
-            flex-wrap: wrap;
-        }
+        .grade-tabs { display: flex; gap: 8px; margin-bottom: 1rem; flex-wrap: wrap; }
         .grade-tab {
-            padding: 6px 16px;
-            border: 1px solid #ddd;
-            background: #fff;
-            border-radius: 20px;
-            cursor: pointer;
-            font-size: 0.85rem;
-            transition: all 0.2s;
+            padding: 6px 14px; border: 1px solid #ddd; background: #fff;
+            border-radius: 20px; cursor: pointer; font-size: 0.83rem; transition: all 0.2s;
         }
-        .grade-tab:hover { border-color: #502b6e; }
-        .grade-tab.active {
-            background: #502b6e;
-            color: #fff;
-            border-color: #502b6e;
-        }
-        .grade-tab .price {
-            font-size: 0.75rem;
-            opacity: 0.7;
-        }
+        .grade-tab:hover { border-color: var(--primary); }
+        .grade-tab.active { background: var(--primary); color: #fff; border-color: var(--primary); }
+        .grade-tab .price { font-size: 0.73rem; opacity: 0.7; }
 
+        /* 무대 */
         .stage {
-            background: #333;
-            color: #fff;
-            text-align: center;
-            padding: 15px;
-            border-radius: 40% 40% 0 0 / 100% 100% 0 0;
-            margin: 0 auto 1.5rem;
-            max-width: 300px;
-            font-size: 0.9rem;
-            letter-spacing: 5px;
+            background: #333; color: #fff; text-align: center;
+            padding: 14px; border-radius: 40% 40% 0 0 / 100% 100% 0 0;
+            margin: 0 auto 1.2rem; max-width: 300px; font-size: 0.85rem; letter-spacing: 5px;
         }
 
-        .seat-map {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 4px;
-            padding: 1rem 0;
+        /* 구역 이름 표시 */
+        .section-label {
+            text-align: center; font-size: 0.75rem; color: #888;
+            margin: 4px 0; font-weight: bold;
+        }
+
+        /* 좌석 맵 */
+        .seat-map-wrapper {
             overflow-x: auto;
+            padding-bottom: 1rem;
         }
-        .seat-row {
-            display: flex;
-            align-items: center;
-            gap: 3px;
+        .seat-map {
+            display: flex; flex-direction: column; align-items: center; gap: 3px; min-width: fit-content;
         }
-        .row-label {
-            width: 24px;
-            text-align: center;
-            font-size: 0.7rem;
-            color: #888;
-        }
+        .seat-row { display: flex; align-items: center; gap: 2px; }
+        .row-label { width: 22px; text-align: center; font-size: 0.65rem; color: #888; flex-shrink: 0; }
         .seat {
-            width: 24px;
-            height: 24px;
-            border-radius: 4px 4px 0 0;
-            border: none;
-            cursor: pointer;
-            font-size: 0.55rem;
-            transition: all 0.15s;
-            display: flex;
-            align-items: center;
-            justify-content: center;
+            width: 22px; height: 22px; border-radius: 4px 4px 0 0; border: none;
+            cursor: pointer; font-size: 0; transition: all 0.15s;
+            display: flex; align-items: center; justify-content: center;
         }
-        .seat.available { background: #a5d6a7; color: #2e7d32; }
-        .seat.available:hover { background: #66bb6a; transform: scale(1.2); }
-        .seat.selected { background: #502b6e; color: #fff; transform: scale(1.15); }
-        .seat.taken { background: #e0e0e0; color: #bbb; cursor: not-allowed; }
+        .seat.available { background: #a5d6a7; }
+        .seat.available:hover { background: #66bb6a; transform: scale(1.25); z-index: 1; }
+        .seat.selected { background: var(--primary); transform: scale(1.15); z-index: 1; }
+        .seat.taken { background: #e0e0e0; cursor: not-allowed; }
         .seat.gap { visibility: hidden; }
-
         .seat-legend {
-            display: flex;
-            gap: 1rem;
-            justify-content: center;
-            margin: 1rem 0;
-            font-size: 0.8rem;
-            color: #888;
+            display: flex; gap: 1rem; justify-content: center; margin: 1rem 0; font-size: 0.8rem; color: #888;
         }
-        .seat-legend span {
-            display: flex;
-            align-items: center;
-            gap: 4px;
-        }
-        .legend-box {
-            width: 16px;
-            height: 16px;
-            border-radius: 3px;
-        }
+        .seat-legend span { display: flex; align-items: center; gap: 4px; }
+        .legend-box { width: 14px; height: 14px; border-radius: 3px; }
 
-        /* 선택 정보 사이드바 */
-        .seat-layout {
-            display: flex;
-            gap: 1.5rem;
-        }
-        .seat-map-area { flex: 1; }
-        .seat-info-sidebar {
-            width: 280px;
-            flex-shrink: 0;
-        }
+        .seat-layout { display: flex; gap: 1.5rem; }
+        .seat-map-area { flex: 1; min-width: 0; }
+        .seat-info-sidebar { width: 280px; flex-shrink: 0; }
         .info-box {
-            background: #f9f9f9;
-            border: 1px solid #e0e0e0;
-            border-radius: 8px;
-            padding: 1.2rem;
-            margin-bottom: 1rem;
+            background: #f9f9f9; border: 1px solid #e0e0e0; border-radius: 8px;
+            padding: 1rem; margin-bottom: 1rem;
         }
         .info-box h4 {
-            font-size: 0.85rem;
-            color: #502b6e;
-            margin-bottom: 0.8rem;
-            padding-bottom: 0.5rem;
-            border-bottom: 1px solid #e0e0e0;
+            font-size: 0.85rem; color: var(--primary); margin-bottom: 0.6rem;
+            padding-bottom: 0.4rem; border-bottom: 1px solid #e0e0e0;
         }
-        .info-row {
-            display: flex;
-            justify-content: space-between;
-            font-size: 0.85rem;
-            margin-bottom: 0.3rem;
-        }
+        .info-row { display: flex; justify-content: space-between; font-size: 0.83rem; margin-bottom: 0.3rem; }
         .info-row .label { color: #888; }
         .info-row .value { font-weight: bold; }
-        .info-row.total {
-            margin-top: 0.5rem;
-            padding-top: 0.5rem;
-            border-top: 1px solid #e0e0e0;
-            font-size: 1rem;
-        }
-        .info-row.total .value { color: #e91e63; }
-        .selected-seat-list {
-            max-height: 120px;
-            overflow-y: auto;
-            font-size: 0.8rem;
-        }
+        .info-row.total { margin-top: 0.5rem; padding-top: 0.5rem; border-top: 1px solid #e0e0e0; font-size: 1rem; }
+        .info-row.total .value { color: var(--accent); }
+        .selected-seat-list { max-height: 130px; overflow-y: auto; }
         .selected-seat-item {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 4px 0;
+            display: flex; justify-content: space-between; align-items: center;
+            padding: 3px 0; font-size: 0.8rem;
         }
         .selected-seat-item button {
-            background: none;
-            border: none;
-            color: #e91e63;
-            cursor: pointer;
-            font-size: 0.8rem;
+            background: none; border: none; color: var(--accent); cursor: pointer; font-size: 0.8rem;
         }
 
         /* 타이머 */
         .timer-bar {
-            background: #fff3e0;
-            border: 1px solid #ffe0b2;
-            border-radius: 8px;
-            padding: 0.8rem 1.2rem;
-            margin-bottom: 1rem;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            font-size: 0.85rem;
+            background: #fff3e0; border: 1px solid #ffe0b2; border-radius: 8px;
+            padding: 0.7rem 1.2rem; margin-bottom: 1rem;
+            display: flex; align-items: center; justify-content: space-between; font-size: 0.85rem;
         }
-        .timer-bar .time {
-            font-weight: bold;
-            color: #e91e63;
-            font-size: 1.2rem;
-        }
+        .timer-bar .time { font-weight: bold; color: var(--accent); font-size: 1.2rem; }
 
-        /* 결제 */
-        .payment-section {
-            background: #fff;
-            padding: 1.5rem;
-            border-radius: 8px;
-            border: 1px solid #e0e0e0;
-            margin-bottom: 1rem;
+        /* ===== 결제 ===== */
+        .pay-section {
+            background: #fff; padding: 1.5rem; border-radius: 8px;
+            border: 1px solid #e0e0e0; margin-bottom: 1rem;
         }
-        .payment-section h3 {
-            font-size: 1rem;
-            margin-bottom: 1rem;
-            padding-bottom: 0.5rem;
-            border-bottom: 2px solid #502b6e;
-            color: #502b6e;
+        .pay-section h3 {
+            font-size: 1rem; margin-bottom: 1rem;
+            padding-bottom: 0.5rem; border-bottom: 2px solid var(--primary); color: var(--primary);
         }
         .payment-methods {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
-            gap: 8px;
-            margin-bottom: 1.5rem;
+            display: grid; grid-template-columns: repeat(auto-fill, minmax(130px, 1fr)); gap: 8px; margin-bottom: 1rem;
         }
-        .payment-method {
-            border: 1px solid #ddd;
-            border-radius: 8px;
-            padding: 1rem;
-            text-align: center;
-            cursor: pointer;
-            transition: all 0.2s;
-            font-size: 0.85rem;
+        .pay-method {
+            border: 1px solid #ddd; border-radius: 8px; padding: 0.8rem; text-align: center;
+            cursor: pointer; transition: all 0.2s; font-size: 0.83rem;
         }
-        .payment-method:hover { border-color: #502b6e; }
-        .payment-method.selected {
-            border-color: #502b6e;
-            background: #f3e5f5;
-        }
-        .payment-method .icon { font-size: 1.5rem; margin-bottom: 0.3rem; }
+        .pay-method:hover { border-color: var(--primary); }
+        .pay-method.selected { border-color: var(--primary); background: var(--primary-light); }
+        .pay-method .icon { font-size: 1.4rem; margin-bottom: 0.2rem; }
 
         .order-summary {
-            background: #f9f9f9;
-            border-radius: 8px;
-            padding: 1.2rem;
-            margin-bottom: 1.5rem;
+            background: #f9f9f9; border-radius: 8px; padding: 1rem; margin-bottom: 1rem;
         }
-        .order-summary h4 {
-            font-size: 0.9rem;
-            margin-bottom: 0.8rem;
-            padding-bottom: 0.5rem;
-            border-bottom: 1px solid #e0e0e0;
-        }
+        .order-summary h4 { font-size: 0.9rem; margin-bottom: 0.6rem; padding-bottom: 0.4rem; border-bottom: 1px solid #e0e0e0; }
 
-        /* CAPTCHA */
         .captcha-box {
-            background: #f9f9f9;
-            border: 1px solid #e0e0e0;
-            border-radius: 8px;
-            padding: 1.5rem;
-            margin-bottom: 1.5rem;
-            text-align: center;
+            background: #f9f9f9; border: 1px solid #e0e0e0; border-radius: 8px;
+            padding: 1.5rem; margin-bottom: 1rem; text-align: center;
         }
         .captcha-image {
-            background: #fff;
-            border: 1px solid #ddd;
-            padding: 15px 30px;
-            display: inline-block;
-            border-radius: 4px;
-            margin-bottom: 1rem;
-            font-size: 2rem;
-            font-weight: bold;
-            letter-spacing: 8px;
-            font-family: 'Courier New', monospace;
-            color: #333;
-            position: relative;
-            user-select: none;
+            background: #fff; border: 1px solid #ddd; padding: 12px 28px;
+            display: inline-block; border-radius: 4px; margin-bottom: 1rem;
+            font-size: 1.8rem; font-weight: bold; letter-spacing: 8px;
+            font-family: 'Courier New', monospace; color: #333;
+            position: relative; user-select: none;
         }
         .captcha-image::before {
-            content: '';
-            position: absolute;
-            top: 0; left: 0; right: 0; bottom: 0;
-            background: repeating-linear-gradient(
-                45deg,
-                transparent,
-                transparent 5px,
-                rgba(0,0,0,0.03) 5px,
-                rgba(0,0,0,0.03) 10px
-            );
+            content: ''; position: absolute; top: 0; left: 0; right: 0; bottom: 0;
+            background: repeating-linear-gradient(45deg, transparent, transparent 5px, rgba(0,0,0,0.04) 5px, rgba(0,0,0,0.04) 10px);
         }
         .captcha-input {
-            padding: 10px 16px;
-            border: 1px solid #ddd;
-            border-radius: 6px;
-            font-size: 1rem;
-            width: 200px;
-            text-align: center;
-            letter-spacing: 3px;
+            padding: 8px 14px; border: 1px solid #ddd; border-radius: 6px;
+            font-size: 1rem; width: 180px; text-align: center; letter-spacing: 3px;
         }
         .captcha-refresh {
-            background: none;
-            border: none;
-            color: #502b6e;
-            cursor: pointer;
-            font-size: 1.2rem;
-            margin-left: 8px;
-            vertical-align: middle;
+            background: none; border: none; color: var(--primary); cursor: pointer;
+            font-size: 1.1rem; margin-left: 8px; vertical-align: middle;
         }
 
-        /* 버튼들 */
-        .btn-row {
-            display: flex;
-            gap: 1rem;
-            justify-content: center;
-            margin-top: 1.5rem;
-        }
+        /* ===== 버튼 ===== */
+        .btn-row { display: flex; gap: 1rem; justify-content: center; margin-top: 1.5rem; flex-wrap: wrap; }
         .btn {
-            padding: 12px 32px;
-            border: none;
-            border-radius: 6px;
-            font-size: 1rem;
-            font-weight: bold;
-            cursor: pointer;
-            transition: all 0.2s;
+            padding: 10px 28px; border: none; border-radius: 6px;
+            font-size: 0.95rem; font-weight: bold; cursor: pointer; transition: all 0.2s;
         }
         .btn:hover { transform: translateY(-2px); }
-        .btn-primary {
-            background: #502b6e;
-            color: #fff;
-        }
-        .btn-primary:hover { background: #7b1fa2; }
-        .btn-secondary {
-            background: #fff;
-            color: #502b6e;
-            border: 1px solid #502b6e;
-        }
-        .btn-pink {
-            background: #e91e63;
-            color: #fff;
-        }
-        .btn-pink:hover { background: #c2185b; }
-        .btn:disabled {
-            opacity: 0.4;
-            cursor: not-allowed;
-            transform: none;
-        }
+        .btn-primary { background: var(--primary); color: #fff; }
+        .btn-primary:hover { opacity: 0.9; }
+        .btn-secondary { background: #fff; color: var(--primary); border: 1px solid var(--primary); }
+        .btn-accent { background: var(--accent); color: #fff; }
+        .btn-accent:hover { opacity: 0.9; }
+        .btn:disabled { opacity: 0.4; cursor: not-allowed; transform: none; }
 
-        /* 결과 */
-        .result-overlay {
-            display: none;
-            position: fixed;
-            top: 0; left: 0; right: 0; bottom: 0;
-            background: rgba(0,0,0,0.7);
-            z-index: 1000;
-            align-items: center;
-            justify-content: center;
-        }
-        .result-overlay.show { display: flex; }
-        .result-box {
-            background: #fff;
-            border-radius: 16px;
-            padding: 3rem;
-            text-align: center;
-            max-width: 500px;
-            width: 90%;
-        }
-        .result-icon { font-size: 5rem; margin-bottom: 1rem; }
-        .result-box h2 { margin-bottom: 0.5rem; }
-        .result-box p { color: #888; margin-bottom: 1.5rem; line-height: 1.6; }
+        /* ===== 결과 ===== */
+        .result-icon { font-size: 4.5rem; margin-bottom: 0.8rem; }
         .result-details {
-            background: #f9f9f9;
-            border-radius: 8px;
-            padding: 1rem;
-            margin-bottom: 1.5rem;
-            text-align: left;
+            background: #f9f9f9; border-radius: 8px; padding: 1rem; margin: 1rem 0; text-align: left;
         }
-        .result-detail-row {
-            display: flex;
-            justify-content: space-between;
-            padding: 4px 0;
-            font-size: 0.9rem;
-        }
+        .result-detail-row { display: flex; justify-content: space-between; padding: 4px 0; font-size: 0.88rem; }
         .result-detail-row .label { color: #888; }
 
-        /* 에러 / 실패 결과 */
-        .fail-result h2 { color: #e91e63; }
-
-        /* 로딩 스피너 */
         .spinner {
-            width: 40px;
-            height: 40px;
-            border: 4px solid #e0e0e0;
-            border-top: 4px solid #502b6e;
-            border-radius: 50%;
-            animation: spin 1s linear infinite;
-            margin: 1rem auto;
+            width: 36px; height: 36px; border: 4px solid #e0e0e0;
+            border-top: 4px solid var(--primary); border-radius: 50%;
+            animation: spin 1s linear infinite; margin: 1rem auto;
         }
         @keyframes spin { to { transform: rotate(360deg); } }
 
-        /* 반응형 */
+        /* ===== 공연장 정보 표시 ===== */
+        .venue-info-bar {
+            background: #f0f0f0; border-radius: 6px; padding: 0.6rem 1rem;
+            margin-bottom: 1rem; font-size: 0.8rem; color: #666;
+            display: flex; justify-content: space-between; align-items: center;
+        }
+        .venue-info-bar .name { font-weight: bold; color: #333; }
+
         @media (max-width: 768px) {
             .detail-top { flex-direction: column; }
             .detail-poster { width: 100%; height: 200px; }
             .seat-layout { flex-direction: column; }
             .seat-info-sidebar { width: 100%; }
-            .seat { width: 20px; height: 20px; }
+            .seat { width: 18px; height: 18px; }
+            .platform-cards { grid-template-columns: 1fr; }
         }
     </style>
 </head>
 <body>
-    <!-- 상단바 -->
-    <div class="top-bar">
-        <div class="inner">
-            <span>티켓팅 시뮬레이터 v1.0</span>
-            <span>
-                <a href="../index.html">게임센터로 돌아가기</a>
-            </span>
-        </div>
-    </div>
-
-    <!-- 헤더 -->
-    <div class="header">
-        <div class="inner">
-            <a href="#" class="logo" onclick="goToStep('list'); return false;">
-                <span class="logo-icon">IP</span>
-                <span class="logo-text">인터파크<span class="logo-sub">티켓</span></span>
-            </a>
-            <a href="../index.html" class="home-link">← 게임센터</a>
-        </div>
-    </div>
-
-    <!-- 네비게이션 -->
-    <div class="nav-bar">
-        <div class="inner">
-            <a class="nav-item active">콘서트</a>
-            <a class="nav-item">뮤지컬</a>
-            <a class="nav-item">스포츠</a>
-            <a class="nav-item">클래식</a>
-            <a class="nav-item">전시</a>
-        </div>
-    </div>
-
-    <!-- 대기열 오버레이 -->
-    <div class="queue-overlay" id="queue-overlay">
-        <div class="queue-box">
-            <h2>접속 대기 중</h2>
-            <p style="color:#888;">현재 접속자가 많아 대기 중입니다.</p>
-            <div class="queue-number" id="queue-number">--</div>
-            <div class="queue-info">내 앞 대기인원: <span id="queue-ahead">--</span>명</div>
-            <div class="progress-bar">
-                <div class="progress-fill" id="queue-progress" style="width:0%"></div>
+    <!-- ===== 플랫폼 선택 ===== -->
+    <div class="platform-select" id="platform-select">
+        <h1>🎫 티켓팅 시뮬레이터</h1>
+        <p class="sub">티켓 플랫폼을 선택하세요</p>
+        <div class="platform-cards">
+            <div class="platform-card" onclick="selectPlatform('interpark')">
+                <div class="icon">🟣</div>
+                <h2>인터파크 티켓</h2>
+                <p>대한민국 대표 티켓 예매 사이트</p>
+                <div class="color-bar" style="background:linear-gradient(90deg,#502b6e,#e91e63)"></div>
             </div>
-            <div class="queue-info">예상 대기시간: <span id="queue-eta">--</span></div>
-            <div class="queue-warning">
-                ⚠ 새로고침 하시면 대기 순서가 초기화됩니다.<br>
-                창을 닫지 마시고 기다려 주세요.
+            <div class="platform-card" onclick="selectPlatform('ticketlink')">
+                <div class="icon">🔴</div>
+                <h2>티켓링크</h2>
+                <p>빠르고 정확한 티켓 예매</p>
+                <div class="color-bar" style="background:linear-gradient(90deg,#e5001b,#1a73e8)"></div>
+            </div>
+            <div class="platform-card" onclick="selectPlatform('melon')">
+                <div class="icon">🟢</div>
+                <h2>멜론티켓</h2>
+                <p>음악을 사랑하는 당신을 위한</p>
+                <div class="color-bar" style="background:linear-gradient(90deg,#00c73c,#ff5252)"></div>
             </div>
         </div>
+        <a href="../index.html" class="back-home">← 게임센터로 돌아가기</a>
     </div>
 
-    <!-- 결과 오버레이 -->
-    <div class="result-overlay" id="result-overlay">
-        <div class="result-box" id="result-box"></div>
-    </div>
-
-    <div class="main">
-        <!-- STEP 1: 공연 목록 -->
-        <div class="step active" id="step-list">
-            <div class="event-banner">
-                <h2>HOT 티켓 오픈</h2>
-                <p>지금 가장 뜨거운 공연 티켓을 예매하세요!</p>
+    <!-- ===== 메인 앱 ===== -->
+    <div class="app" id="app">
+        <div class="top-bar">
+            <div class="inner">
+                <span id="platform-label">인터파크 티켓</span>
+                <span>
+                    <a onclick="backToPlatform()">플랫폼 변경</a> |
+                    <a href="../index.html">게임센터</a>
+                </span>
             </div>
-            <div class="event-list" id="event-list"></div>
+        </div>
+        <div class="header">
+            <div class="inner">
+                <div class="logo" onclick="goToStep('list')">
+                    <span class="logo-badge" id="logo-badge">IP</span>
+                    <span class="logo-name" id="logo-name">인터파크<span class="accent">티켓</span></span>
+                </div>
+            </div>
+        </div>
+        <div class="nav-bar">
+            <div class="inner">
+                <span class="nav-item active">콘서트</span>
+                <span class="nav-item">뮤지컬</span>
+                <span class="nav-item">스포츠</span>
+                <span class="nav-item">클래식</span>
+                <span class="nav-item">전시</span>
+            </div>
         </div>
 
-        <!-- STEP 2: 공연 상세 + 날짜/시간 선택 -->
-        <div class="step" id="step-detail"></div>
+        <!-- 대기열 -->
+        <div class="overlay" id="queue-overlay">
+            <div class="overlay-box">
+                <h2 style="color:var(--primary)">접속 대기 중</h2>
+                <p style="color:#888;font-size:0.9rem;">현재 접속자가 많아 대기 중입니다.</p>
+                <div class="queue-number" id="queue-number">--</div>
+                <div class="queue-info">내 앞 대기인원: <span id="queue-ahead">--</span>명</div>
+                <div class="progress-bar"><div class="progress-fill" id="queue-progress" style="width:0%"></div></div>
+                <div class="queue-info">예상 대기시간: <span id="queue-eta">--</span></div>
+                <div class="queue-warning">⚠ 새로고침 시 대기 순서가 초기화됩니다. 창을 닫지 마세요.</div>
+            </div>
+        </div>
 
-        <!-- STEP 3: 좌석 선택 -->
-        <div class="step" id="step-seat"></div>
+        <!-- 결과 -->
+        <div class="overlay" id="result-overlay">
+            <div class="overlay-box" id="result-box"></div>
+        </div>
 
-        <!-- STEP 4: 결제 -->
-        <div class="step" id="step-payment"></div>
+        <div class="main">
+            <div class="step active" id="step-list">
+                <div class="event-banner">
+                    <h2>HOT 티켓 오픈</h2>
+                    <p>지금 가장 뜨거운 공연 티켓을 예매하세요!</p>
+                </div>
+                <div class="event-list" id="event-list"></div>
+            </div>
+            <div class="step" id="step-detail"></div>
+            <div class="step" id="step-seat"></div>
+            <div class="step" id="step-payment"></div>
+        </div>
     </div>
 
     <script>
-        // ========== 데이터 ==========
-        const events = [
-            {
-                id: 1,
-                title: '2026 BTS 월드투어 [Yet To Come] - 서울',
-                artist: 'BTS',
-                venue: '잠실종합운동장 주경기장',
-                poster: '🎤',
-                posterBg: 'linear-gradient(135deg, #6a1b9a, #e91e63)',
-                badge: '티켓오픈',
-                dates: ['2026.04.05(토)', '2026.04.06(일)', '2026.04.12(토)', '2026.04.13(일)'],
-                times: { '2026.04.05(토)': ['18:00', '21:00'], '2026.04.06(일)': ['17:00'], '2026.04.12(토)': ['18:00', '21:00'], '2026.04.13(일)': ['17:00'] },
-                grades: [
-                    { name: 'VIP', price: 165000, color: '#ffd700' },
-                    { name: 'R석', price: 143000, color: '#e91e63' },
-                    { name: 'S석', price: 121000, color: '#2196f3' },
-                    { name: 'A석', price: 99000, color: '#4caf50' }
-                ],
-                totalSeats: 200,
-                popularity: 98
-            },
-            {
-                id: 2,
-                title: 'IU 콘서트 [The Winning] - 앙코르',
-                artist: 'IU',
-                venue: 'KSPO DOME (올림픽체조경기장)',
-                poster: '🎵',
-                posterBg: 'linear-gradient(135deg, #1565c0, #7c4dff)',
-                badge: '인기',
-                dates: ['2026.05.01(금)', '2026.05.02(토)', '2026.05.03(일)'],
-                times: { '2026.05.01(금)': ['19:00'], '2026.05.02(토)': ['18:00', '20:30'], '2026.05.03(일)': ['17:00'] },
-                grades: [
-                    { name: 'VIP', price: 154000, color: '#ffd700' },
-                    { name: 'R석', price: 132000, color: '#e91e63' },
-                    { name: 'S석', price: 110000, color: '#2196f3' },
-                    { name: 'A석', price: 88000, color: '#4caf50' }
-                ],
-                totalSeats: 180,
-                popularity: 95
-            },
-            {
-                id: 3,
-                title: 'aespa LIVE TOUR [SYNK] - 서울',
-                artist: 'aespa',
-                venue: '고척스카이돔',
-                poster: '🌟',
-                posterBg: 'linear-gradient(135deg, #00695c, #00bcd4)',
-                badge: '티켓오픈',
-                dates: ['2026.03.28(토)', '2026.03.29(일)'],
-                times: { '2026.03.28(토)': ['18:00'], '2026.03.29(일)': ['17:00', '20:00'] },
-                grades: [
-                    { name: 'VIP', price: 143000, color: '#ffd700' },
-                    { name: 'R석', price: 121000, color: '#e91e63' },
-                    { name: 'S석', price: 99000, color: '#2196f3' }
-                ],
-                totalSeats: 160,
-                popularity: 92
-            },
-            {
-                id: 4,
-                title: '뮤지컬 [오페라의 유령] 25주년 특별공연',
-                artist: '앙상블 캐스트',
-                venue: '블루스퀘어 신한카드홀',
-                poster: '🎭',
-                posterBg: 'linear-gradient(135deg, #37474f, #78909c)',
-                badge: null,
-                dates: ['2026.04.10(금)', '2026.04.11(토)', '2026.04.12(일)'],
-                times: { '2026.04.10(금)': ['19:30'], '2026.04.11(토)': ['14:00', '19:30'], '2026.04.12(일)': ['14:00'] },
-                grades: [
-                    { name: 'VIP', price: 170000, color: '#ffd700' },
-                    { name: 'R석', price: 140000, color: '#e91e63' },
-                    { name: 'S석', price: 110000, color: '#2196f3' },
-                    { name: 'A석', price: 80000, color: '#4caf50' },
-                    { name: 'B석', price: 60000, color: '#ff9800' }
-                ],
-                totalSeats: 120,
-                popularity: 85
+    // ==================== 공연장 데이터 ====================
+    const venues = {
+        'jamsil_main': {
+            name: '잠실종합운동장 주경기장',
+            capacity: '69,950석',
+            sections: [
+                { name: '플로어', rows: 8, cols: 30, grade: 0, gapCols: [10, 20] },
+                { name: 'VIP석', rows: 4, cols: 34, grade: 0, gapCols: [11, 22] },
+                { name: '1층 스탠드', rows: 10, cols: 38, grade: 1, gapCols: [9, 19, 28] },
+                { name: '2층 스탠드', rows: 10, cols: 40, grade: 2, gapCols: [10, 20, 30] },
+                { name: '3층 스탠드', rows: 8, cols: 42, grade: 3, gapCols: [10, 21, 31] }
+            ]
+        },
+        'kspo_dome': {
+            name: 'KSPO DOME (올림픽체조경기장)',
+            capacity: '15,000석',
+            sections: [
+                { name: '플로어 A', rows: 6, cols: 24, grade: 0, gapCols: [8, 16] },
+                { name: '플로어 B', rows: 6, cols: 24, grade: 0, gapCols: [8, 16] },
+                { name: '1층 스탠드', rows: 8, cols: 30, grade: 1, gapCols: [10, 20] },
+                { name: '2층 스탠드', rows: 8, cols: 32, grade: 2, gapCols: [10, 21] },
+                { name: '3층 스탠드', rows: 6, cols: 34, grade: 3, gapCols: [11, 22] }
+            ]
+        },
+        'gocheok_dome': {
+            name: '고척스카이돔',
+            capacity: '18,000석',
+            sections: [
+                { name: '플로어', rows: 8, cols: 28, grade: 0, gapCols: [9, 19] },
+                { name: '1층 내야석', rows: 8, cols: 32, grade: 1, gapCols: [10, 21] },
+                { name: '1층 외야석', rows: 6, cols: 34, grade: 2, gapCols: [11, 22] },
+                { name: '2층 스탠드', rows: 8, cols: 36, grade: 2, gapCols: [12, 24] },
+                { name: '3층 스탠드', rows: 6, cols: 38, grade: 3, gapCols: [12, 25] }
+            ]
+        },
+        'bluesquare': {
+            name: '블루스퀘어 신한카드홀',
+            capacity: '1,766석',
+            sections: [
+                { name: 'VIP석', rows: 3, cols: 20, grade: 0, gapCols: [10] },
+                { name: 'R석 (1층)', rows: 8, cols: 24, grade: 1, gapCols: [8, 16] },
+                { name: 'S석 (1층)', rows: 5, cols: 24, grade: 2, gapCols: [8, 16] },
+                { name: 'A석 (2층)', rows: 5, cols: 22, grade: 3, gapCols: [7, 14] },
+                { name: 'B석 (3층)', rows: 4, cols: 20, grade: 4, gapCols: [10] }
+            ]
+        },
+        'olympic_hall': {
+            name: '올림픽공원 올림픽홀',
+            capacity: '2,452석',
+            sections: [
+                { name: 'VIP석', rows: 3, cols: 22, grade: 0, gapCols: [7, 14] },
+                { name: 'R석', rows: 7, cols: 26, grade: 1, gapCols: [8, 17] },
+                { name: 'S석', rows: 6, cols: 28, grade: 2, gapCols: [9, 18] },
+                { name: 'A석 (2층)', rows: 5, cols: 26, grade: 3, gapCols: [8, 17] }
+            ]
+        },
+        'sejong': {
+            name: '세종문화회관 대극장',
+            capacity: '3,022석',
+            sections: [
+                { name: 'VIP석', rows: 3, cols: 24, grade: 0, gapCols: [8, 16] },
+                { name: 'R석 (1층)', rows: 8, cols: 28, grade: 1, gapCols: [9, 18] },
+                { name: 'S석 (1층)', rows: 6, cols: 28, grade: 2, gapCols: [9, 18] },
+                { name: 'A석 (2층)', rows: 6, cols: 26, grade: 3, gapCols: [8, 17] },
+                { name: 'B석 (3층)', rows: 5, cols: 24, grade: 4, gapCols: [8, 16] }
+            ]
+        },
+        'kspo_sk': {
+            name: 'SK올림픽핸드볼경기장',
+            capacity: '5,000석',
+            sections: [
+                { name: '플로어 스탠딩', rows: 6, cols: 22, grade: 0, gapCols: [7, 14] },
+                { name: '1층 스탠드', rows: 7, cols: 26, grade: 1, gapCols: [8, 17] },
+                { name: '2층 스탠드', rows: 6, cols: 28, grade: 2, gapCols: [9, 18] }
+            ]
+        },
+        'inspire_arena': {
+            name: '인스파이어 아레나',
+            capacity: '15,000석',
+            sections: [
+                { name: '플로어', rows: 8, cols: 26, grade: 0, gapCols: [8, 17] },
+                { name: 'VIP석', rows: 4, cols: 30, grade: 0, gapCols: [10, 20] },
+                { name: '1층 스탠드', rows: 8, cols: 34, grade: 1, gapCols: [11, 22] },
+                { name: '2층 스탠드', rows: 8, cols: 36, grade: 2, gapCols: [12, 24] },
+                { name: '3층 스탠드', rows: 6, cols: 38, grade: 3, gapCols: [12, 25] }
+            ]
+        }
+    };
+
+    // ==================== 공연 데이터 ====================
+    const events = [
+        {
+            id: 1, title: '2026 BTS 월드투어 [Yet To Come] - 서울', artist: 'BTS',
+            venue: 'jamsil_main', poster: '🎤',
+            posterBg: 'linear-gradient(135deg, #6a1b9a, #e91e63)',
+            badge: '티켓오픈',
+            dates: ['2026.04.05(토)', '2026.04.06(일)', '2026.04.12(토)', '2026.04.13(일)'],
+            times: { '2026.04.05(토)': ['18:00','21:00'], '2026.04.06(일)': ['17:00'], '2026.04.12(토)': ['18:00','21:00'], '2026.04.13(일)': ['17:00'] },
+            grades: [
+                { name: 'VIP', price: 165000, color: '#ffd700' },
+                { name: 'R석', price: 143000, color: '#e91e63' },
+                { name: 'S석', price: 121000, color: '#2196f3' },
+                { name: 'A석', price: 99000, color: '#4caf50' }
+            ],
+            popularity: 98
+        },
+        {
+            id: 2, title: 'IU 콘서트 [The Winning] - 앙코르', artist: 'IU',
+            venue: 'kspo_dome', poster: '🎵',
+            posterBg: 'linear-gradient(135deg, #1565c0, #7c4dff)',
+            badge: '인기',
+            dates: ['2026.05.01(금)', '2026.05.02(토)', '2026.05.03(일)'],
+            times: { '2026.05.01(금)': ['19:00'], '2026.05.02(토)': ['18:00','20:30'], '2026.05.03(일)': ['17:00'] },
+            grades: [
+                { name: 'VIP', price: 154000, color: '#ffd700' },
+                { name: 'R석', price: 132000, color: '#e91e63' },
+                { name: 'S석', price: 110000, color: '#2196f3' },
+                { name: 'A석', price: 88000, color: '#4caf50' }
+            ],
+            popularity: 95
+        },
+        {
+            id: 3, title: 'aespa LIVE TOUR [SYNK] - 서울', artist: 'aespa',
+            venue: 'gocheok_dome', poster: '🌟',
+            posterBg: 'linear-gradient(135deg, #00695c, #00bcd4)',
+            badge: '티켓오픈',
+            dates: ['2026.03.28(토)', '2026.03.29(일)'],
+            times: { '2026.03.28(토)': ['18:00'], '2026.03.29(일)': ['17:00','20:00'] },
+            grades: [
+                { name: 'VIP', price: 143000, color: '#ffd700' },
+                { name: 'R석', price: 121000, color: '#e91e63' },
+                { name: 'S석', price: 99000, color: '#2196f3' },
+                { name: 'A석', price: 77000, color: '#4caf50' }
+            ],
+            popularity: 92
+        },
+        {
+            id: 4, title: '뮤지컬 [오페라의 유령] 25주년 특별공연', artist: '앙상블 캐스트',
+            venue: 'bluesquare', poster: '🎭',
+            posterBg: 'linear-gradient(135deg, #37474f, #78909c)',
+            badge: null,
+            dates: ['2026.04.10(금)', '2026.04.11(토)', '2026.04.12(일)'],
+            times: { '2026.04.10(금)': ['19:30'], '2026.04.11(토)': ['14:00','19:30'], '2026.04.12(일)': ['14:00'] },
+            grades: [
+                { name: 'VIP', price: 170000, color: '#ffd700' },
+                { name: 'R석', price: 140000, color: '#e91e63' },
+                { name: 'S석', price: 110000, color: '#2196f3' },
+                { name: 'A석', price: 80000, color: '#4caf50' },
+                { name: 'B석', price: 60000, color: '#ff9800' }
+            ],
+            popularity: 85
+        },
+        {
+            id: 5, title: 'BLACKPINK WORLD TOUR [BORN PINK] FINALE', artist: 'BLACKPINK',
+            venue: 'inspire_arena', poster: '💗',
+            posterBg: 'linear-gradient(135deg, #e91e63, #000)',
+            badge: '티켓오픈',
+            dates: ['2026.06.14(토)', '2026.06.15(일)'],
+            times: { '2026.06.14(토)': ['18:00','21:00'], '2026.06.15(일)': ['18:00'] },
+            grades: [
+                { name: 'VIP', price: 176000, color: '#ffd700' },
+                { name: 'R석', price: 154000, color: '#e91e63' },
+                { name: 'S석', price: 132000, color: '#2196f3' },
+                { name: 'A석', price: 99000, color: '#4caf50' }
+            ],
+            popularity: 97
+        },
+        {
+            id: 6, title: '2026 서울 재즈 페스티벌', artist: '다수 아티스트',
+            venue: 'olympic_hall', poster: '🎷',
+            posterBg: 'linear-gradient(135deg, #ff8f00, #f44336)',
+            badge: null,
+            dates: ['2026.05.23(토)', '2026.05.24(일)', '2026.05.25(월)'],
+            times: { '2026.05.23(토)': ['14:00','19:00'], '2026.05.24(일)': ['14:00','19:00'], '2026.05.25(월)': ['14:00'] },
+            grades: [
+                { name: 'VIP', price: 132000, color: '#ffd700' },
+                { name: 'R석', price: 110000, color: '#e91e63' },
+                { name: 'S석', price: 88000, color: '#2196f3' },
+                { name: 'A석', price: 66000, color: '#4caf50' }
+            ],
+            popularity: 78
+        },
+        {
+            id: 7, title: 'Stray Kids 5TH WORLD TOUR', artist: 'Stray Kids',
+            venue: 'kspo_sk', poster: '🔥',
+            posterBg: 'linear-gradient(135deg, #d32f2f, #ff6f00)',
+            badge: '인기',
+            dates: ['2026.04.19(토)', '2026.04.20(일)'],
+            times: { '2026.04.19(토)': ['18:00'], '2026.04.20(일)': ['17:00'] },
+            grades: [
+                { name: 'VIP', price: 143000, color: '#ffd700' },
+                { name: 'R석', price: 121000, color: '#e91e63' },
+                { name: 'S석', price: 99000, color: '#2196f3' }
+            ],
+            popularity: 90
+        },
+        {
+            id: 8, title: '세종문화회관 송년 클래식 - 베토벤 교향곡', artist: '서울시향',
+            venue: 'sejong', poster: '🎻',
+            posterBg: 'linear-gradient(135deg, #1a237e, #4a148c)',
+            badge: null,
+            dates: ['2026.12.30(수)', '2026.12.31(목)'],
+            times: { '2026.12.30(수)': ['19:30'], '2026.12.31(목)': ['17:00','21:00'] },
+            grades: [
+                { name: 'VIP', price: 150000, color: '#ffd700' },
+                { name: 'R석', price: 120000, color: '#e91e63' },
+                { name: 'S석', price: 90000, color: '#2196f3' },
+                { name: 'A석', price: 70000, color: '#4caf50' },
+                { name: 'B석', price: 50000, color: '#ff9800' }
+            ],
+            popularity: 70
+        }
+    ];
+
+    // ==================== 플랫폼 설정 ====================
+    const platforms = {
+        interpark: {
+            label: '인터파크 티켓',
+            badge: 'IP',
+            name: '인터파크',
+            nameAccent: '티켓',
+            themeClass: ''
+        },
+        ticketlink: {
+            label: '티켓링크',
+            badge: 'TL',
+            name: '티켓',
+            nameAccent: '링크',
+            themeClass: 'theme-ticketlink'
+        },
+        melon: {
+            label: '멜론티켓',
+            badge: 'M',
+            name: '멜론',
+            nameAccent: '티켓',
+            themeClass: 'theme-melon'
+        }
+    };
+
+    // ==================== 상태 ====================
+    let state = {
+        platform: null,
+        currentEvent: null,
+        selectedDate: null,
+        selectedTime: null,
+        selectedSeats: [],
+        maxSeats: 4,
+        paymentMethod: null,
+        timer: null,
+        timerSeconds: 480,
+        seatData: [] // [{sectionIdx, row, col, type, grade, label}]
+    };
+
+    // ==================== 플랫폼 선택 ====================
+    function selectPlatform(key) {
+        state.platform = key;
+        const p = platforms[key];
+        document.body.className = p.themeClass;
+        document.getElementById('platform-label').textContent = p.label;
+        document.getElementById('logo-badge').textContent = p.badge;
+        document.getElementById('logo-name').innerHTML = `${p.name}<span class="accent">${p.nameAccent}</span>`;
+        document.getElementById('platform-select').style.display = 'none';
+        document.getElementById('app').classList.add('show');
+        renderEventList();
+    }
+
+    function backToPlatform() {
+        clearInterval(state.timer);
+        document.getElementById('platform-select').style.display = '';
+        document.getElementById('app').classList.remove('show');
+        goToStep('list');
+    }
+
+    // ==================== STEP 1: 공연 목록 ====================
+    function renderEventList() {
+        document.getElementById('event-list').innerHTML = events.map(e => {
+            const v = venues[e.venue];
+            return `
+            <div class="event-card" onclick="selectEvent(${e.id})">
+                <div class="event-poster" style="background:${e.posterBg}">${e.poster}</div>
+                <div class="event-info">
+                    ${e.badge ? `<span class="event-badge">${e.badge}</span>` : ''}
+                    <h3>${e.title}</h3>
+                    <div class="venue">${v.name}</div>
+                    <div class="date">${e.dates[0]} ~ ${e.dates[e.dates.length-1]}</div>
+                </div>
+            </div>`;
+        }).join('');
+    }
+
+    function selectEvent(id) {
+        state.currentEvent = events.find(e => e.id === id);
+        state.selectedDate = null;
+        state.selectedTime = null;
+        renderDetail();
+        goToStep('detail');
+    }
+
+    // ==================== STEP 2: 상세 ====================
+    function renderDetail() {
+        const e = state.currentEvent;
+        const v = venues[e.venue];
+        document.getElementById('step-detail').innerHTML = `
+            <div class="detail-top">
+                <div class="detail-poster" style="background:${e.posterBg}">${e.poster}</div>
+                <div class="detail-info">
+                    <h2>${e.title}</h2>
+                    <table class="detail-table">
+                        <tr><td>장소</td><td>${v.name} (${v.capacity})</td></tr>
+                        <tr><td>일시</td><td>${e.dates[0]} ~ ${e.dates[e.dates.length-1]}</td></tr>
+                        <tr><td>가격</td><td>${e.grades.map(g => `${g.name} ${g.price.toLocaleString()}원`).join(' / ')}</td></tr>
+                        <tr><td>주최</td><td>시뮬레이션 엔터테인먼트</td></tr>
+                        <tr><td>관람등급</td><td>만 7세 이상</td></tr>
+                    </table>
+                </div>
+            </div>
+            <div class="selector-panel">
+                <h3>날짜 선택</h3>
+                <div class="date-grid">
+                    ${e.dates.map(d => {
+                        const so = Math.random() < 0.12;
+                        return `<button class="sel-btn${so?' soldout':''}" ${so?'disabled':''} onclick="pickDate('${d}',this)">${d}</button>`;
+                    }).join('')}
+                </div>
+                <div id="time-section" style="display:none">
+                    <h3 style="font-size:0.95rem;margin-bottom:0.8rem;border-bottom:none;padding-bottom:0;color:var(--primary)">회차 선택</h3>
+                    <div class="time-slots" id="time-slots"></div>
+                </div>
+            </div>
+            <div class="btn-row">
+                <button class="btn btn-secondary" onclick="goToStep('list')">목록으로</button>
+                <button class="btn btn-accent" id="reserve-btn" disabled onclick="startQueue()">예매하기</button>
+            </div>`;
+    }
+
+    function pickDate(date, el) {
+        state.selectedDate = date;
+        state.selectedTime = null;
+        document.querySelectorAll('.date-grid .sel-btn').forEach(b => b.classList.remove('selected'));
+        el.classList.add('selected');
+        const times = state.currentEvent.times[date] || [];
+        document.getElementById('time-section').style.display = 'block';
+        document.getElementById('time-slots').innerHTML = times.map(t => {
+            const rem = Math.floor(Math.random() * 80) + 5;
+            return `<button class="sel-btn" onclick="pickTime('${t}',this)">${t}<span class="remaining">잔여 ${rem}석</span></button>`;
+        }).join('');
+        document.getElementById('reserve-btn').disabled = true;
+    }
+
+    function pickTime(time, el) {
+        state.selectedTime = time;
+        document.querySelectorAll('.time-slots .sel-btn').forEach(b => b.classList.remove('selected'));
+        el.classList.add('selected');
+        document.getElementById('reserve-btn').disabled = false;
+    }
+
+    // ==================== 대기열 ====================
+    function startQueue() {
+        const overlay = document.getElementById('queue-overlay');
+        overlay.classList.add('show');
+        let pos = Math.floor(Math.random() * 8000) + 1500;
+        const total = pos + Math.floor(Math.random() * 2000);
+        const qn = document.getElementById('queue-number');
+        const qa = document.getElementById('queue-ahead');
+        const qp = document.getElementById('queue-progress');
+        const qe = document.getElementById('queue-eta');
+        qn.textContent = pos.toLocaleString();
+        qa.textContent = pos.toLocaleString();
+        qp.style.width = '0%';
+        qe.textContent = Math.ceil(pos/500) + '분';
+
+        const iv = setInterval(() => {
+            pos = Math.max(0, pos - Math.floor(Math.random() * 900) - 200);
+            qn.textContent = pos.toLocaleString();
+            qa.textContent = pos.toLocaleString();
+            qp.style.width = ((total-pos)/total*100).toFixed(1) + '%';
+            qe.textContent = pos > 0 ? Math.ceil(pos/500)+'분' : '곧 입장합니다...';
+            if (pos <= 0) {
+                clearInterval(iv);
+                setTimeout(() => {
+                    overlay.classList.remove('show');
+                    buildSeatData();
+                    renderSeatStep();
+                    goToStep('seat');
+                    startTimer();
+                }, 700);
             }
-        ];
+        }, 500);
+    }
 
-        // ========== 상태 ==========
-        let state = {
-            currentEvent: null,
-            selectedDate: null,
-            selectedTime: null,
-            selectedGrade: 0,
-            selectedSeats: [],
-            maxSeats: 4,
-            paymentMethod: null,
-            timer: null,
-            timerSeconds: 480, // 8분
-            seatMap: [],
-        };
+    // ==================== 좌석 데이터 생성 (공연장 기반) ====================
+    function buildSeatData() {
+        const e = state.currentEvent;
+        const v = venues[e.venue];
+        state.seatData = [];
+        state.selectedSeats = [];
+        const takenRate = e.popularity / 100 * 0.55 + Math.random() * 0.2;
+        let globalRow = 0;
 
-        // ========== STEP 1: 공연 목록 ==========
-        function renderEventList() {
-            const list = document.getElementById('event-list');
-            list.innerHTML = events.map(e => `
-                <div class="event-card" onclick="selectEvent(${e.id})">
-                    <div class="event-poster" style="background:${e.posterBg}">${e.poster}</div>
-                    <div class="event-info">
-                        ${e.badge ? `<span class="event-badge">${e.badge}</span>` : ''}
-                        <h3>${e.title}</h3>
-                        <div class="venue">${e.venue}</div>
-                        <div class="date">${e.dates[0]} ~ ${e.dates[e.dates.length - 1]}</div>
-                    </div>
-                </div>
-            `).join('');
-        }
-
-        function selectEvent(id) {
-            state.currentEvent = events.find(e => e.id === id);
-            state.selectedDate = null;
-            state.selectedTime = null;
-            renderDetail();
-            goToStep('detail');
-        }
-
-        // ========== STEP 2: 공연 상세 ==========
-        function renderDetail() {
-            const e = state.currentEvent;
-            const container = document.getElementById('step-detail');
-
-            container.innerHTML = `
-                <div class="detail-top">
-                    <div class="detail-poster" style="background:${e.posterBg}">${e.poster}</div>
-                    <div class="detail-info">
-                        <h2>${e.title}</h2>
-                        <table class="detail-table">
-                            <tr><td>장소</td><td>${e.venue}</td></tr>
-                            <tr><td>일시</td><td>${e.dates[0]} ~ ${e.dates[e.dates.length - 1]}</td></tr>
-                            <tr><td>가격</td><td>${e.grades.map(g => `${g.name} ${g.price.toLocaleString()}원`).join(' / ')}</td></tr>
-                            <tr><td>주최</td><td>시뮬레이션 엔터테인먼트</td></tr>
-                            <tr><td>관람등급</td><td>만 7세 이상</td></tr>
-                        </table>
-                    </div>
-                </div>
-
-                <div class="date-selector">
-                    <h3>날짜 선택</h3>
-                    <div class="date-grid" id="date-grid">
-                        ${e.dates.map(d => {
-                            const soldout = Math.random() < 0.15;
-                            return `<button class="date-btn${soldout ? ' soldout' : ''}" ${soldout ? 'disabled' : ''} onclick="selectDate('${d}')">${d}</button>`;
-                        }).join('')}
-                    </div>
-                    <div id="time-section" style="display:none">
-                        <h3 style="font-size:0.95rem;margin-bottom:0.8rem;border-bottom:none;padding-bottom:0;">회차 선택</h3>
-                        <div class="time-slots" id="time-slots"></div>
-                    </div>
-                </div>
-
-                <div class="btn-row">
-                    <button class="btn btn-secondary" onclick="goToStep('list')">목록으로</button>
-                    <button class="btn btn-pink" id="reserve-btn" disabled onclick="startQueue()">예매하기</button>
-                </div>
-            `;
-        }
-
-        function selectDate(date) {
-            state.selectedDate = date;
-            state.selectedTime = null;
-            document.querySelectorAll('.date-btn').forEach(b => b.classList.remove('selected'));
-            event.target.classList.add('selected');
-
-            const times = state.currentEvent.times[date] || [];
-            const timeSection = document.getElementById('time-section');
-            timeSection.style.display = 'block';
-
-            document.getElementById('time-slots').innerHTML = times.map(t => {
-                const remaining = Math.floor(Math.random() * 50) + 5;
-                return `<button class="time-btn" onclick="selectTime('${t}', this)">
-                    ${t}
-                    <span class="remaining">잔여 ${remaining}석</span>
-                </button>`;
-            }).join('');
-
-            document.getElementById('reserve-btn').disabled = true;
-        }
-
-        function selectTime(time, el) {
-            state.selectedTime = time;
-            document.querySelectorAll('.time-btn').forEach(b => b.classList.remove('selected'));
-            el.classList.add('selected');
-            document.getElementById('reserve-btn').disabled = false;
-        }
-
-        // ========== 대기열 시뮬레이션 ==========
-        function startQueue() {
-            const overlay = document.getElementById('queue-overlay');
-            overlay.classList.add('show');
-
-            let position = Math.floor(Math.random() * 8000) + 2000;
-            const total = position + Math.floor(Math.random() * 2000);
-
-            const queueNum = document.getElementById('queue-number');
-            const queueAhead = document.getElementById('queue-ahead');
-            const queueProgress = document.getElementById('queue-progress');
-            const queueEta = document.getElementById('queue-eta');
-
-            queueNum.textContent = position.toLocaleString();
-            queueAhead.textContent = position.toLocaleString();
-            queueProgress.style.width = '0%';
-            queueEta.textContent = Math.ceil(position / 500) + '분';
-
-            const interval = setInterval(() => {
-                const decrease = Math.floor(Math.random() * 800) + 200;
-                position = Math.max(0, position - decrease);
-
-                queueNum.textContent = position.toLocaleString();
-                queueAhead.textContent = position.toLocaleString();
-                const pct = ((total - position) / total * 100).toFixed(1);
-                queueProgress.style.width = pct + '%';
-                queueEta.textContent = position > 0 ? Math.ceil(position / 500) + '분' : '곧 입장합니다...';
-
-                if (position <= 0) {
-                    clearInterval(interval);
-                    setTimeout(() => {
-                        overlay.classList.remove('show');
-                        generateSeatMap();
-                        renderSeatStep();
-                        goToStep('seat');
-                        startTimer();
-                    }, 800);
-                }
-            }, 600);
-        }
-
-        // ========== STEP 3: 좌석 선택 ==========
-        function generateSeatMap() {
-            const e = state.currentEvent;
-            const rows = 15;
-            const cols = 20;
-            state.seatMap = [];
-            state.selectedSeats = [];
-
-            // 좌석 배치 생성
-            const takenRate = e.popularity / 100 * 0.6 + Math.random() * 0.2;
-
-            for (let r = 0; r < rows; r++) {
-                const row = [];
-                for (let c = 0; c < cols; c++) {
-                    // 통로
-                    if (c === 4 || c === 15) {
-                        row.push({ type: 'gap' });
-                        continue;
+        v.sections.forEach((sec, si) => {
+            for (let r = 0; r < sec.rows; r++) {
+                const rowData = [];
+                for (let c = 0; c < sec.cols; c++) {
+                    if (sec.gapCols.includes(c)) {
+                        rowData.push({ type: 'gap', sectionIdx: si });
+                    } else {
+                        const grade = Math.min(sec.grade, e.grades.length - 1);
+                        const taken = Math.random() < takenRate;
+                        rowData.push({
+                            type: taken ? 'taken' : 'available',
+                            sectionIdx: si,
+                            grade: grade,
+                            globalRow: globalRow,
+                            col: c,
+                            label: `${sec.name.substring(0,3)}-${String.fromCharCode(65 + r)}${c + 1}`
+                        });
                     }
-
-                    // 등급 결정 (앞쪽이 높은 등급)
-                    let gradeIdx;
-                    if (r < 3) gradeIdx = 0;
-                    else if (r < 6) gradeIdx = Math.min(1, e.grades.length - 1);
-                    else if (r < 10) gradeIdx = Math.min(2, e.grades.length - 1);
-                    else gradeIdx = Math.min(3, e.grades.length - 1);
-
-                    const taken = Math.random() < takenRate;
-                    row.push({
-                        type: taken ? 'taken' : 'available',
-                        grade: gradeIdx,
-                        row: r,
-                        col: c,
-                        label: `${String.fromCharCode(65 + r)}${c + 1}`
-                    });
                 }
-                state.seatMap.push(row);
+                state.seatData.push({ sectionIdx: si, sectionName: sec.name, rowLabel: String.fromCharCode(65 + r), seats: rowData });
+                globalRow++;
             }
-        }
+        });
+    }
 
-        function renderSeatStep() {
-            const e = state.currentEvent;
-            const container = document.getElementById('step-seat');
+    // ==================== STEP 3: 좌석 선택 ====================
+    let currentGradeFilter = -1;
 
-            container.innerHTML = `
-                <div class="timer-bar">
-                    <span>⏰ 좌석 선택 남은 시간</span>
-                    <span class="time" id="timer-display">08:00</span>
+    function renderSeatStep() {
+        const e = state.currentEvent;
+        const v = venues[e.venue];
+        document.getElementById('step-seat').innerHTML = `
+            <div class="timer-bar">
+                <span>⏰ 좌석 선택 남은 시간</span>
+                <span class="time" id="timer-display">08:00</span>
+            </div>
+            <div class="venue-info-bar">
+                <span class="name">📍 ${v.name}</span>
+                <span>${v.capacity}</span>
+            </div>
+            <div class="seat-section">
+                <h3>좌석 선택 (최대 ${state.maxSeats}매)</h3>
+                <div class="grade-tabs">
+                    ${e.grades.map((g, i) => `
+                        <button class="grade-tab${i===0?' active':''}" onclick="filterGrade(${i},this)" style="border-left:3px solid ${g.color}">
+                            ${g.name} <span class="price">${g.price.toLocaleString()}원</span>
+                        </button>`).join('')}
+                    <button class="grade-tab" onclick="filterGrade(-1,this)">전체</button>
                 </div>
-
-                <div class="seat-section">
-                    <h3>좌석 선택 (최대 ${state.maxSeats}매)</h3>
-
-                    <div class="grade-tabs">
-                        ${e.grades.map((g, i) => `
-                            <button class="grade-tab${i === 0 ? ' active' : ''}" onclick="filterGrade(${i}, this)" style="border-left: 3px solid ${g.color}">
-                                ${g.name} <span class="price">${g.price.toLocaleString()}원</span>
-                            </button>
-                        `).join('')}
-                        <button class="grade-tab" onclick="filterGrade(-1, this)">전체</button>
-                    </div>
-
-                    <div class="seat-layout">
-                        <div class="seat-map-area">
-                            <div class="stage">S T A G E</div>
-                            <div class="seat-map" id="seat-map"></div>
-                            <div class="seat-legend">
-                                <span><div class="legend-box" style="background:#a5d6a7"></div> 선택가능</span>
-                                <span><div class="legend-box" style="background:#502b6e"></div> 선택됨</span>
-                                <span><div class="legend-box" style="background:#e0e0e0"></div> 예매완료</span>
-                            </div>
-                        </div>
-                        <div class="seat-info-sidebar">
-                            <div class="info-box">
-                                <h4>선택한 좌석</h4>
-                                <div class="selected-seat-list" id="selected-seat-list">
-                                    <div style="color:#aaa; font-size:0.85rem;">좌석을 선택해주세요</div>
-                                </div>
-                            </div>
-                            <div class="info-box">
-                                <h4>예매 정보</h4>
-                                <div class="info-row">
-                                    <span class="label">공연</span>
-                                    <span class="value" style="font-size:0.8rem;">${e.title.substring(0, 15)}...</span>
-                                </div>
-                                <div class="info-row">
-                                    <span class="label">일시</span>
-                                    <span class="value">${state.selectedDate} ${state.selectedTime}</span>
-                                </div>
-                                <div class="info-row">
-                                    <span class="label">매수</span>
-                                    <span class="value" id="seat-count">0매</span>
-                                </div>
-                                <div class="info-row total">
-                                    <span class="label">총 금액</span>
-                                    <span class="value" id="total-amount">0원</span>
-                                </div>
-                            </div>
-                            <button class="btn btn-pink" style="width:100%" id="go-payment-btn" disabled onclick="goToPayment()">결제하기</button>
+                <div class="seat-layout">
+                    <div class="seat-map-area">
+                        <div class="stage">S T A G E</div>
+                        <div class="seat-map-wrapper"><div class="seat-map" id="seat-map"></div></div>
+                        <div class="seat-legend">
+                            <span><div class="legend-box" style="background:#a5d6a7"></div> 선택가능</span>
+                            <span><div class="legend-box" style="background:var(--primary)"></div> 선택됨</span>
+                            <span><div class="legend-box" style="background:#e0e0e0"></div> 예매완료</span>
                         </div>
                     </div>
+                    <div class="seat-info-sidebar">
+                        <div class="info-box">
+                            <h4>선택한 좌석</h4>
+                            <div class="selected-seat-list" id="sel-seat-list"><div style="color:#aaa;font-size:0.85rem;">좌석을 선택해주세요</div></div>
+                        </div>
+                        <div class="info-box">
+                            <h4>예매 정보</h4>
+                            <div class="info-row"><span class="label">공연</span><span class="value" style="font-size:0.78rem;">${e.title.substring(0,18)}...</span></div>
+                            <div class="info-row"><span class="label">일시</span><span class="value">${state.selectedDate} ${state.selectedTime}</span></div>
+                            <div class="info-row"><span class="label">장소</span><span class="value" style="font-size:0.78rem;">${v.name}</span></div>
+                            <div class="info-row"><span class="label">매수</span><span class="value" id="seat-count">0매</span></div>
+                            <div class="info-row total"><span class="label">총 금액</span><span class="value" id="total-amount">0원</span></div>
+                        </div>
+                        <button class="btn btn-accent" style="width:100%" id="go-pay-btn" disabled onclick="goToPayment()">결제하기</button>
+                    </div>
                 </div>
-            `;
+            </div>`;
+        currentGradeFilter = 0;
+        renderSeatMap();
+    }
 
-            renderSeatMap(-1);
-        }
+    function renderSeatMap() {
+        const e = state.currentEvent;
+        const mapDiv = document.getElementById('seat-map');
+        let html = '';
+        let lastSection = -1;
 
-        function renderSeatMap(gradeFilter) {
-            const mapDiv = document.getElementById('seat-map');
-            const e = state.currentEvent;
-
-            mapDiv.innerHTML = state.seatMap.map((row, r) => {
-                const seats = row.map((seat, c) => {
-                    if (seat.type === 'gap') return '<div class="seat gap"></div>';
-
-                    const isSelected = state.selectedSeats.some(s => s.row === r && s.col === c);
-                    const dimmed = gradeFilter >= 0 && seat.grade !== gradeFilter && seat.type !== 'taken';
-
-                    if (seat.type === 'taken') {
-                        return `<div class="seat taken" title="예매완료"></div>`;
-                    }
-
-                    const cls = isSelected ? 'selected' : 'available';
-                    const style = dimmed ? 'opacity:0.2;' : '';
-                    const gradeColor = e.grades[seat.grade]?.color || '#a5d6a7';
-
-                    return `<div class="seat ${cls}" style="${style}${!isSelected ? `background:${gradeColor}33; border: 1px solid ${gradeColor};` : ''}"
-                        onclick="toggleSeat(${r},${c})" title="${seat.label} (${e.grades[seat.grade]?.name})"></div>`;
-                }).join('');
-
-                return `<div class="seat-row">
-                    <span class="row-label">${String.fromCharCode(65 + r)}</span>
-                    ${seats}
-                    <span class="row-label">${String.fromCharCode(65 + r)}</span>
-                </div>`;
-            }).join('');
-        }
-
-        let currentGradeFilter = -1;
-        function filterGrade(idx, el) {
-            currentGradeFilter = idx;
-            document.querySelectorAll('.grade-tab').forEach(b => b.classList.remove('active'));
-            el.classList.add('active');
-            renderSeatMap(idx);
-        }
-
-        function toggleSeat(r, c) {
-            const seat = state.seatMap[r][c];
-            if (seat.type === 'taken' || seat.type === 'gap') return;
-
-            const existIdx = state.selectedSeats.findIndex(s => s.row === r && s.col === c);
-            if (existIdx >= 0) {
-                state.selectedSeats.splice(existIdx, 1);
-            } else {
-                if (state.selectedSeats.length >= state.maxSeats) {
-                    alert(`최대 ${state.maxSeats}매까지 선택 가능합니다.`);
+        state.seatData.forEach((rowData, ri) => {
+            if (rowData.sectionIdx !== lastSection) {
+                lastSection = rowData.sectionIdx;
+                html += `<div class="section-label">${rowData.sectionName}</div>`;
+            }
+            html += `<div class="seat-row"><span class="row-label">${rowData.rowLabel}</span>`;
+            rowData.seats.forEach((seat, ci) => {
+                if (seat.type === 'gap') {
+                    html += '<div class="seat gap"></div>';
                     return;
                 }
-                state.selectedSeats.push({ ...seat, row: r, col: c });
-            }
-
-            updateSeatInfo();
-            renderSeatMap(currentGradeFilter);
-        }
-
-        function removeSeat(r, c) {
-            state.selectedSeats = state.selectedSeats.filter(s => !(s.row === r && s.col === c));
-            updateSeatInfo();
-            renderSeatMap(currentGradeFilter);
-        }
-
-        function updateSeatInfo() {
-            const e = state.currentEvent;
-            const listDiv = document.getElementById('selected-seat-list');
-
-            if (state.selectedSeats.length === 0) {
-                listDiv.innerHTML = '<div style="color:#aaa; font-size:0.85rem;">좌석을 선택해주세요</div>';
-            } else {
-                listDiv.innerHTML = state.selectedSeats.map(s => {
-                    const grade = e.grades[s.grade];
-                    return `<div class="selected-seat-item">
-                        <span>${s.label} (${grade.name})</span>
-                        <span>${grade.price.toLocaleString()}원</span>
-                        <button onclick="removeSeat(${s.row},${s.col})">✕</button>
-                    </div>`;
-                }).join('');
-            }
-
-            const total = state.selectedSeats.reduce((sum, s) => sum + e.grades[s.grade].price, 0);
-            document.getElementById('seat-count').textContent = state.selectedSeats.length + '매';
-            document.getElementById('total-amount').textContent = total.toLocaleString() + '원';
-            document.getElementById('go-payment-btn').disabled = state.selectedSeats.length === 0;
-        }
-
-        // 타이머
-        function startTimer() {
-            state.timerSeconds = 480;
-            clearInterval(state.timer);
-            state.timer = setInterval(() => {
-                state.timerSeconds--;
-                const min = Math.floor(state.timerSeconds / 60);
-                const sec = state.timerSeconds % 60;
-                const display = document.getElementById('timer-display');
-                if (display) {
-                    display.textContent = `${String(min).padStart(2, '0')}:${String(sec).padStart(2, '0')}`;
-                    if (state.timerSeconds <= 60) display.style.color = '#e91e63';
-                }
-                if (state.timerSeconds <= 0) {
-                    clearInterval(state.timer);
-                    showResult('timeout');
-                }
-            }, 1000);
-        }
-
-        // ========== STEP 4: 결제 ==========
-        function goToPayment() {
-            clearInterval(state.timer);
-            state.timerSeconds = 180; // 결제 3분
-            renderPaymentStep();
-            goToStep('payment');
-            startPaymentTimer();
-        }
-
-        function startPaymentTimer() {
-            state.timer = setInterval(() => {
-                state.timerSeconds--;
-                const min = Math.floor(state.timerSeconds / 60);
-                const sec = state.timerSeconds % 60;
-                const display = document.getElementById('payment-timer');
-                if (display) {
-                    display.textContent = `${String(min).padStart(2, '0')}:${String(sec).padStart(2, '0')}`;
-                    if (state.timerSeconds <= 30) display.style.color = '#e91e63';
-                }
-                if (state.timerSeconds <= 0) {
-                    clearInterval(state.timer);
-                    showResult('timeout');
-                }
-            }, 1000);
-        }
-
-        function renderPaymentStep() {
-            const e = state.currentEvent;
-            const total = state.selectedSeats.reduce((sum, s) => sum + e.grades[s.grade].price, 0);
-            const container = document.getElementById('step-payment');
-
-            // 캡차 생성
-            const captchaText = generateCaptcha();
-
-            container.innerHTML = `
-                <div class="timer-bar">
-                    <span>⏰ 결제 남은 시간</span>
-                    <span class="time" id="payment-timer">03:00</span>
-                </div>
-
-                <div class="payment-section">
-                    <h3>주문 확인</h3>
-                    <div class="order-summary">
-                        <h4>예매 정보</h4>
-                        <div class="info-row"><span class="label">공연명</span><span class="value">${e.title}</span></div>
-                        <div class="info-row"><span class="label">일시</span><span class="value">${state.selectedDate} ${state.selectedTime}</span></div>
-                        <div class="info-row"><span class="label">장소</span><span class="value">${e.venue}</span></div>
-                        <div class="info-row"><span class="label">좌석</span><span class="value">${state.selectedSeats.map(s => `${s.label}(${e.grades[s.grade].name})`).join(', ')}</span></div>
-                        <div class="info-row"><span class="label">매수</span><span class="value">${state.selectedSeats.length}매</span></div>
-                        <div class="info-row total"><span class="label">총 결제금액</span><span class="value">${total.toLocaleString()}원</span></div>
-                    </div>
-                </div>
-
-                <div class="payment-section">
-                    <h3>결제 수단 선택</h3>
-                    <div class="payment-methods">
-                        <div class="payment-method" onclick="selectPayment('card', this)">
-                            <div class="icon">💳</div>
-                            신용카드
-                        </div>
-                        <div class="payment-method" onclick="selectPayment('phone', this)">
-                            <div class="icon">📱</div>
-                            휴대폰결제
-                        </div>
-                        <div class="payment-method" onclick="selectPayment('kakao', this)">
-                            <div class="icon">💛</div>
-                            카카오페이
-                        </div>
-                        <div class="payment-method" onclick="selectPayment('naver', this)">
-                            <div class="icon">💚</div>
-                            네이버페이
-                        </div>
-                        <div class="payment-method" onclick="selectPayment('bank', this)">
-                            <div class="icon">🏦</div>
-                            계좌이체
-                        </div>
-                        <div class="payment-method" onclick="selectPayment('toss', this)">
-                            <div class="icon">🔵</div>
-                            토스페이
-                        </div>
-                    </div>
-                </div>
-
-                <div class="payment-section">
-                    <h3>자동입력 방지</h3>
-                    <div class="captcha-box">
-                        <div class="captcha-image" id="captcha-display">${captchaText}</div>
-                        <button class="captcha-refresh" onclick="refreshCaptcha()">🔄</button>
-                        <br><br>
-                        <input type="text" class="captcha-input" id="captcha-input" placeholder="위 문자를 입력하세요" maxlength="6">
-                    </div>
-                </div>
-
-                <div class="btn-row">
-                    <button class="btn btn-secondary" onclick="goToStep('seat'); startTimer();">좌석 다시 선택</button>
-                    <button class="btn btn-pink" id="pay-btn" onclick="processPayment()">결제하기</button>
-                </div>
-            `;
-        }
-
-        let currentCaptcha = '';
-        function generateCaptcha() {
-            const chars = 'ABCDEFGHJKLMNPQRSTUVWXYZ23456789';
-            currentCaptcha = '';
-            for (let i = 0; i < 6; i++) {
-                currentCaptcha += chars[Math.floor(Math.random() * chars.length)];
-            }
-            return currentCaptcha;
-        }
-
-        function refreshCaptcha() {
-            const text = generateCaptcha();
-            document.getElementById('captcha-display').textContent = text;
-            document.getElementById('captcha-input').value = '';
-        }
-
-        function selectPayment(method, el) {
-            state.paymentMethod = method;
-            document.querySelectorAll('.payment-method').forEach(m => m.classList.remove('selected'));
-            el.classList.add('selected');
-        }
-
-        function processPayment() {
-            const captchaInput = document.getElementById('captcha-input').value.toUpperCase();
-
-            if (!state.paymentMethod) {
-                alert('결제 수단을 선택해주세요.');
-                return;
-            }
-
-            if (captchaInput !== currentCaptcha) {
-                alert('자동입력 방지 문자가 일치하지 않습니다.');
-                refreshCaptcha();
-                return;
-            }
-
-            document.getElementById('pay-btn').disabled = true;
-            document.getElementById('pay-btn').textContent = '결제 처리 중...';
-
-            // 결제 처리 시뮬레이션 (80% 성공률)
-            setTimeout(() => {
-                clearInterval(state.timer);
-                const success = Math.random() < 0.8;
-
-                if (success) {
-                    showResult('success');
+                const isSel = state.selectedSeats.some(s => s.globalRow === seat.globalRow && s.col === seat.col);
+                const dimmed = currentGradeFilter >= 0 && seat.grade !== currentGradeFilter && seat.type !== 'taken';
+                if (seat.type === 'taken') {
+                    html += '<div class="seat taken"></div>';
                 } else {
-                    // 실패 이유 랜덤
-                    const reasons = [
-                        '다른 사용자가 먼저 결제를 완료했습니다.',
-                        '결제 처리 중 오류가 발생했습니다.',
-                        '선택하신 좌석이 이미 예매되었습니다.',
-                        '결제 시간이 초과되었습니다.'
-                    ];
-                    showResult('fail', reasons[Math.floor(Math.random() * reasons.length)]);
+                    const cls = isSel ? 'selected' : 'available';
+                    const gradeColor = e.grades[seat.grade]?.color || '#a5d6a7';
+                    const style = dimmed ? 'opacity:0.15;' : (!isSel ? `background:${gradeColor}44;border:1px solid ${gradeColor};` : '');
+                    html += `<div class="seat ${cls}" style="${style}" onclick="toggleSeat(${ri},${ci})" title="${seat.label} (${e.grades[seat.grade]?.name})"></div>`;
                 }
-            }, 2000 + Math.random() * 2000);
+            });
+            html += `<span class="row-label">${rowData.rowLabel}</span></div>`;
+        });
+        mapDiv.innerHTML = html;
+    }
+
+    function filterGrade(idx, el) {
+        currentGradeFilter = idx;
+        document.querySelectorAll('.grade-tab').forEach(b => b.classList.remove('active'));
+        el.classList.add('active');
+        renderSeatMap();
+    }
+
+    function toggleSeat(ri, ci) {
+        const seat = state.seatData[ri].seats[ci];
+        if (seat.type !== 'available') return;
+        const idx = state.selectedSeats.findIndex(s => s.globalRow === seat.globalRow && s.col === seat.col);
+        if (idx >= 0) {
+            state.selectedSeats.splice(idx, 1);
+        } else {
+            if (state.selectedSeats.length >= state.maxSeats) return alert(`최대 ${state.maxSeats}매까지 선택 가능합니다.`);
+            state.selectedSeats.push({...seat, _ri: ri, _ci: ci});
         }
+        updateSeatInfo();
+        renderSeatMap();
+    }
 
-        // ========== 결과 화면 ==========
-        function showResult(type, reason) {
-            clearInterval(state.timer);
-            const overlay = document.getElementById('result-overlay');
-            const box = document.getElementById('result-box');
-            const e = state.currentEvent;
+    function removeSeat(ri, ci) {
+        const seat = state.seatData[ri].seats[ci];
+        state.selectedSeats = state.selectedSeats.filter(s => !(s.globalRow === seat.globalRow && s.col === seat.col));
+        updateSeatInfo();
+        renderSeatMap();
+    }
 
-            if (type === 'success') {
-                const total = state.selectedSeats.reduce((sum, s) => sum + e.grades[s.grade].price, 0);
-                const orderNum = 'IP' + Date.now().toString().slice(-10);
+    function updateSeatInfo() {
+        const e = state.currentEvent;
+        const listDiv = document.getElementById('sel-seat-list');
+        if (state.selectedSeats.length === 0) {
+            listDiv.innerHTML = '<div style="color:#aaa;font-size:0.85rem;">좌석을 선택해주세요</div>';
+        } else {
+            listDiv.innerHTML = state.selectedSeats.map(s => {
+                const g = e.grades[s.grade];
+                return `<div class="selected-seat-item"><span>${s.label} (${g.name})</span><span>${g.price.toLocaleString()}원</span><button onclick="removeSeat(${s._ri},${s._ci})">✕</button></div>`;
+            }).join('');
+        }
+        const total = state.selectedSeats.reduce((sum, s) => sum + e.grades[s.grade].price, 0);
+        document.getElementById('seat-count').textContent = state.selectedSeats.length + '매';
+        document.getElementById('total-amount').textContent = total.toLocaleString() + '원';
+        document.getElementById('go-pay-btn').disabled = state.selectedSeats.length === 0;
+    }
 
-                box.innerHTML = `
-                    <div class="result-icon">🎉</div>
-                    <h2 style="color:#502b6e;">예매가 완료되었습니다!</h2>
-                    <p>축하합니다! 티켓팅에 성공하셨습니다.</p>
-                    <div class="result-details">
-                        <div class="result-detail-row"><span class="label">예매번호</span><span>${orderNum}</span></div>
-                        <div class="result-detail-row"><span class="label">공연</span><span>${e.title}</span></div>
-                        <div class="result-detail-row"><span class="label">일시</span><span>${state.selectedDate} ${state.selectedTime}</span></div>
-                        <div class="result-detail-row"><span class="label">장소</span><span>${e.venue}</span></div>
-                        <div class="result-detail-row"><span class="label">좌석</span><span>${state.selectedSeats.map(s => s.label).join(', ')}</span></div>
-                        <div class="result-detail-row"><span class="label">결제금액</span><span style="font-weight:bold;color:#e91e63;">${total.toLocaleString()}원</span></div>
-                    </div>
-                    <div class="btn-row">
-                        <button class="btn btn-primary" onclick="resetAll()">다시 하기</button>
-                    </div>
-                `;
-            } else if (type === 'timeout') {
-                box.className = 'result-box fail-result';
-                box.innerHTML = `
-                    <div class="result-icon">⏰</div>
-                    <h2>시간이 초과되었습니다</h2>
-                    <p>제한 시간 내에 결제를 완료하지 못했습니다.<br>선택하신 좌석은 자동으로 해제됩니다.</p>
-                    <div class="btn-row">
-                        <button class="btn btn-primary" onclick="resetAll()">다시 하기</button>
-                    </div>
-                `;
-            } else {
-                box.className = 'result-box fail-result';
-                box.innerHTML = `
-                    <div class="result-icon">😢</div>
-                    <h2>예매에 실패했습니다</h2>
-                    <p>${reason || '알 수 없는 오류가 발생했습니다.'}<br>다시 시도해 주세요.</p>
-                    <div class="btn-row">
-                        <button class="btn btn-secondary" onclick="closeResult(); goToStep('list');">목록으로</button>
-                        <button class="btn btn-primary" onclick="resetAll()">다시 하기</button>
-                    </div>
-                `;
+    function startTimer() {
+        state.timerSeconds = 480;
+        clearInterval(state.timer);
+        state.timer = setInterval(() => {
+            state.timerSeconds--;
+            const m = Math.floor(state.timerSeconds / 60);
+            const s = state.timerSeconds % 60;
+            const d = document.getElementById('timer-display');
+            if (d) {
+                d.textContent = `${String(m).padStart(2,'0')}:${String(s).padStart(2,'0')}`;
+                if (state.timerSeconds <= 60) d.style.color = 'var(--accent)';
             }
+            if (state.timerSeconds <= 0) { clearInterval(state.timer); showResult('timeout'); }
+        }, 1000);
+    }
 
-            overlay.classList.add('show');
+    // ==================== STEP 4: 결제 ====================
+    function goToPayment() {
+        clearInterval(state.timer);
+        state.timerSeconds = 180;
+        renderPayment();
+        goToStep('payment');
+        state.timer = setInterval(() => {
+            state.timerSeconds--;
+            const m = Math.floor(state.timerSeconds / 60);
+            const s = state.timerSeconds % 60;
+            const d = document.getElementById('pay-timer');
+            if (d) {
+                d.textContent = `${String(m).padStart(2,'0')}:${String(s).padStart(2,'0')}`;
+                if (state.timerSeconds <= 30) d.style.color = 'var(--accent)';
+            }
+            if (state.timerSeconds <= 0) { clearInterval(state.timer); showResult('timeout'); }
+        }, 1000);
+    }
+
+    let currentCaptcha = '';
+    function genCaptcha() {
+        const c = 'ABCDEFGHJKLMNPQRSTUVWXYZ23456789';
+        currentCaptcha = '';
+        for (let i = 0; i < 6; i++) currentCaptcha += c[Math.floor(Math.random() * c.length)];
+        return currentCaptcha;
+    }
+
+    function renderPayment() {
+        const e = state.currentEvent;
+        const v = venues[e.venue];
+        const total = state.selectedSeats.reduce((sum, s) => sum + e.grades[s.grade].price, 0);
+        const cap = genCaptcha();
+
+        document.getElementById('step-payment').innerHTML = `
+            <div class="timer-bar"><span>⏰ 결제 남은 시간</span><span class="time" id="pay-timer">03:00</span></div>
+            <div class="pay-section">
+                <h3>주문 확인</h3>
+                <div class="order-summary">
+                    <h4>예매 정보</h4>
+                    <div class="info-row"><span class="label">공연명</span><span class="value" style="font-size:0.85rem">${e.title}</span></div>
+                    <div class="info-row"><span class="label">일시</span><span class="value">${state.selectedDate} ${state.selectedTime}</span></div>
+                    <div class="info-row"><span class="label">장소</span><span class="value">${v.name}</span></div>
+                    <div class="info-row"><span class="label">좌석</span><span class="value" style="font-size:0.8rem">${state.selectedSeats.map(s=>`${s.label}(${e.grades[s.grade].name})`).join(', ')}</span></div>
+                    <div class="info-row"><span class="label">매수</span><span class="value">${state.selectedSeats.length}매</span></div>
+                    <div class="info-row total"><span class="label">총 결제금액</span><span class="value">${total.toLocaleString()}원</span></div>
+                </div>
+            </div>
+            <div class="pay-section">
+                <h3>결제 수단</h3>
+                <div class="payment-methods">
+                    <div class="pay-method" onclick="pickPay('card',this)"><div class="icon">💳</div>신용카드</div>
+                    <div class="pay-method" onclick="pickPay('phone',this)"><div class="icon">📱</div>휴대폰결제</div>
+                    <div class="pay-method" onclick="pickPay('kakao',this)"><div class="icon">💛</div>카카오페이</div>
+                    <div class="pay-method" onclick="pickPay('naver',this)"><div class="icon">💚</div>네이버페이</div>
+                    <div class="pay-method" onclick="pickPay('bank',this)"><div class="icon">🏦</div>계좌이체</div>
+                    <div class="pay-method" onclick="pickPay('toss',this)"><div class="icon">🔵</div>토스페이</div>
+                </div>
+            </div>
+            <div class="pay-section">
+                <h3>자동입력 방지</h3>
+                <div class="captcha-box">
+                    <div class="captcha-image" id="captcha-display">${cap}</div>
+                    <button class="captcha-refresh" onclick="document.getElementById('captcha-display').textContent=genCaptcha();document.getElementById('captcha-input').value=''">🔄</button>
+                    <br><br>
+                    <input type="text" class="captcha-input" id="captcha-input" placeholder="위 문자를 입력하세요" maxlength="6">
+                </div>
+            </div>
+            <div class="btn-row">
+                <button class="btn btn-secondary" onclick="goToStep('seat');startTimer();">좌석 다시 선택</button>
+                <button class="btn btn-accent" id="pay-btn" onclick="processPayment()">결제하기</button>
+            </div>`;
+    }
+
+    function pickPay(method, el) {
+        state.paymentMethod = method;
+        document.querySelectorAll('.pay-method').forEach(m => m.classList.remove('selected'));
+        el.classList.add('selected');
+    }
+
+    function processPayment() {
+        if (!state.paymentMethod) return alert('결제 수단을 선택해주세요.');
+        if (document.getElementById('captcha-input').value.toUpperCase() !== currentCaptcha) {
+            alert('자동입력 방지 문자가 일치하지 않습니다.');
+            document.getElementById('captcha-display').textContent = genCaptcha();
+            document.getElementById('captcha-input').value = '';
+            return;
         }
+        const btn = document.getElementById('pay-btn');
+        btn.disabled = true; btn.textContent = '결제 처리 중...';
 
-        function closeResult() {
-            document.getElementById('result-overlay').classList.remove('show');
-        }
-
-        function resetAll() {
+        setTimeout(() => {
             clearInterval(state.timer);
-            state.currentEvent = null;
-            state.selectedDate = null;
-            state.selectedTime = null;
-            state.selectedGrade = 0;
-            state.selectedSeats = [];
-            state.paymentMethod = null;
-            closeResult();
-            goToStep('list');
-        }
+            if (Math.random() < 0.8) { showResult('success'); }
+            else {
+                const reasons = ['다른 사용자가 먼저 결제를 완료했습니다.','결제 처리 중 오류가 발생했습니다.','선택하신 좌석이 이미 예매되었습니다.','결제 시간이 초과되었습니다.'];
+                showResult('fail', reasons[Math.floor(Math.random()*reasons.length)]);
+            }
+        }, 2000 + Math.random() * 2000);
+    }
 
-        // ========== 네비게이션 ==========
-        function goToStep(stepName) {
-            document.querySelectorAll('.step').forEach(s => s.classList.remove('active'));
-            document.getElementById(`step-${stepName}`).classList.add('active');
-            window.scrollTo({ top: 0, behavior: 'smooth' });
-        }
+    // ==================== 결과 ====================
+    function showResult(type, reason) {
+        clearInterval(state.timer);
+        const box = document.getElementById('result-box');
+        const e = state.currentEvent;
+        const v = venues[e.venue];
 
-        // ========== 초기화 ==========
-        renderEventList();
+        if (type === 'success') {
+            const total = state.selectedSeats.reduce((sum, s) => sum + e.grades[s.grade].price, 0);
+            const orderNum = 'TK' + Date.now().toString().slice(-10);
+            box.innerHTML = `
+                <div class="result-icon">🎉</div>
+                <h2 style="color:var(--primary)">예매가 완료되었습니다!</h2>
+                <p style="color:#888">축하합니다! 티켓팅에 성공하셨습니다.</p>
+                <div class="result-details">
+                    <div class="result-detail-row"><span class="label">예매번호</span><span>${orderNum}</span></div>
+                    <div class="result-detail-row"><span class="label">플랫폼</span><span>${platforms[state.platform].label}</span></div>
+                    <div class="result-detail-row"><span class="label">공연</span><span style="font-size:0.85rem">${e.title}</span></div>
+                    <div class="result-detail-row"><span class="label">일시</span><span>${state.selectedDate} ${state.selectedTime}</span></div>
+                    <div class="result-detail-row"><span class="label">장소</span><span>${v.name}</span></div>
+                    <div class="result-detail-row"><span class="label">좌석</span><span>${state.selectedSeats.map(s=>s.label).join(', ')}</span></div>
+                    <div class="result-detail-row"><span class="label">결제금액</span><span style="font-weight:bold;color:var(--accent)">${total.toLocaleString()}원</span></div>
+                </div>
+                <div class="btn-row"><button class="btn btn-primary" onclick="resetAll()">다시 하기</button></div>`;
+        } else if (type === 'timeout') {
+            box.innerHTML = `
+                <div class="result-icon">⏰</div>
+                <h2 style="color:var(--accent)">시간이 초과되었습니다</h2>
+                <p style="color:#888">제한 시간 내에 완료하지 못했습니다.<br>선택하신 좌석은 자동으로 해제됩니다.</p>
+                <div class="btn-row"><button class="btn btn-primary" onclick="resetAll()">다시 하기</button></div>`;
+        } else {
+            box.innerHTML = `
+                <div class="result-icon">😢</div>
+                <h2 style="color:var(--accent)">예매에 실패했습니다</h2>
+                <p style="color:#888">${reason || '알 수 없는 오류가 발생했습니다.'}<br>다시 시도해 주세요.</p>
+                <div class="btn-row">
+                    <button class="btn btn-secondary" onclick="closeResult();goToStep('list');">목록으로</button>
+                    <button class="btn btn-primary" onclick="resetAll()">다시 하기</button>
+                </div>`;
+        }
+        document.getElementById('result-overlay').classList.add('show');
+    }
+
+    function closeResult() { document.getElementById('result-overlay').classList.remove('show'); }
+
+    function resetAll() {
+        clearInterval(state.timer);
+        state.currentEvent = null;
+        state.selectedDate = null;
+        state.selectedTime = null;
+        state.selectedSeats = [];
+        state.paymentMethod = null;
+        closeResult();
+        goToStep('list');
+    }
+
+    function goToStep(name) {
+        document.querySelectorAll('.step').forEach(s => s.classList.remove('active'));
+        document.getElementById(`step-${name}`).classList.add('active');
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
     </script>
 </body>
 </html>
