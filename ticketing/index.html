@@ -828,6 +828,11 @@
 
     function backToPlatform() {
         clearInterval(state.timer);
+        state.currentEvent = null;
+        state.selectedDate = null;
+        state.selectedTime = null;
+        state.selectedSeats = [];
+        state.paymentMethod = null;
         document.getElementById('platform-select').style.display = '';
         document.getElementById('app').classList.remove('show');
         goToStep('list');
@@ -931,14 +936,14 @@
         qp.style.width = '0%';
         qe.textContent = Math.ceil(pos/500) + '분';
 
-        const iv = setInterval(() => {
+        state.timer = setInterval(() => {
             pos = Math.max(0, pos - Math.floor(Math.random() * 900) - 200);
             qn.textContent = pos.toLocaleString();
             qa.textContent = pos.toLocaleString();
             qp.style.width = ((total-pos)/total*100).toFixed(1) + '%';
             qe.textContent = pos > 0 ? Math.ceil(pos/500)+'분' : '곧 입장합니다...';
             if (pos <= 0) {
-                clearInterval(iv);
+                clearInterval(state.timer);
                 setTimeout(() => {
                     overlay.classList.remove('show');
                     buildSeatData();

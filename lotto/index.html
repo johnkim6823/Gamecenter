@@ -5,82 +5,165 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>로또 6/45 시뮬레이터</title>
     <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: linear-gradient(135deg, #1a1a2e, #16213e, #0f3460);
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
             min-height: 100vh;
-            color: #fff;
+            color: #1d1d1f;
+            background: #f5f5f7;
+            overflow-x: hidden;
         }
+
+        /* ===== 배경 오브 ===== */
+        .bg {
+            position: fixed;
+            top: 0; left: 0; right: 0; bottom: 0;
+            z-index: 0;
+            overflow: hidden;
+            background: linear-gradient(180deg, #fbfbfd 0%, #f5f5f7 100%);
+        }
+        .orb {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(80px);
+            opacity: 0.5;
+            animation: float 20s ease-in-out infinite;
+        }
+        .orb-1 {
+            width: 500px; height: 500px;
+            background: radial-gradient(circle, #a78bfa, #7c3aed);
+            top: -10%; left: -5%;
+            animation-delay: 0s;
+        }
+        .orb-2 {
+            width: 400px; height: 400px;
+            background: radial-gradient(circle, #f472b6, #ec4899);
+            top: 30%; right: -10%;
+            animation-delay: -7s;
+        }
+        .orb-3 {
+            width: 350px; height: 350px;
+            background: radial-gradient(circle, #60a5fa, #3b82f6);
+            bottom: -5%; left: 20%;
+            animation-delay: -14s;
+        }
+        .orb-4 {
+            width: 300px; height: 300px;
+            background: radial-gradient(circle, #fbbf24, #f59e0b);
+            top: 60%; left: -8%;
+            animation-delay: -3s;
+        }
+        @keyframes float {
+            0%, 100% { transform: translate(0, 0) scale(1); }
+            25% { transform: translate(30px, -20px) scale(1.05); }
+            50% { transform: translate(-20px, 20px) scale(0.95); }
+            75% { transform: translate(10px, 10px) scale(1.02); }
+        }
+
+        /* ===== 헤더 ===== */
         .header {
-            background: rgba(0,0,0,0.3);
-            padding: 1rem 2rem;
+            position: relative;
+            z-index: 10;
+            backdrop-filter: saturate(180%) blur(20px);
+            -webkit-backdrop-filter: saturate(180%) blur(20px);
+            background: rgba(255,255,255,0.72);
+            border-bottom: 0.5px solid rgba(0,0,0,0.1);
+            padding: 14px 24px;
             display: flex;
             align-items: center;
             justify-content: space-between;
         }
         .header a {
-            color: #aaa;
+            color: #6e6e73;
             text-decoration: none;
-            font-size: 0.9rem;
+            font-size: 0.85rem;
+            font-weight: 500;
+            transition: color 0.2s;
         }
-        .header a:hover { color: #fff; }
+        .header a:hover { color: #1d1d1f; }
         .header h1 {
-            font-size: 1.5rem;
-            background: linear-gradient(90deg, #ffd700, #ff6b35);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
+            font-size: 1.25rem;
+            font-weight: 600;
+            color: #1d1d1f;
+            letter-spacing: -0.02em;
         }
+
+        /* ===== 컨테이너 ===== */
         .container {
-            max-width: 900px;
+            position: relative;
+            z-index: 10;
+            max-width: 860px;
             margin: 2rem auto;
             padding: 0 1rem;
         }
 
-        /* 모드 선택 */
-        .mode-selector {
+        /* ===== 글래스 카드 ===== */
+        .glass {
+            backdrop-filter: saturate(180%) blur(20px);
+            -webkit-backdrop-filter: saturate(180%) blur(20px);
+            background: rgba(255,255,255,0.72);
+            border: 0.5px solid rgba(0,0,0,0.08);
+            border-radius: 20px;
+            padding: 28px;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 20px rgba(0,0,0,0.04);
+            transition: box-shadow 0.3s;
+        }
+        .glass:hover {
+            box-shadow: 0 4px 30px rgba(0,0,0,0.08);
+        }
+        .glass h2 {
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: #1d1d1f;
+            margin-bottom: 16px;
+            letter-spacing: -0.01em;
+        }
+        .glass .desc {
+            color: #86868b;
+            font-size: 0.85rem;
+            margin-bottom: 16px;
+            font-weight: 400;
+        }
+
+        /* ===== 모드 선택 (세그먼트 컨트롤) ===== */
+        .segment-control {
             display: flex;
-            gap: 1rem;
-            margin-bottom: 2rem;
-            justify-content: center;
+            background: rgba(0,0,0,0.05);
+            border-radius: 10px;
+            padding: 3px;
+            margin-bottom: 24px;
+            max-width: 340px;
+            margin-left: auto;
+            margin-right: auto;
         }
-        .mode-btn {
-            padding: 0.8rem 2rem;
-            border: 2px solid rgba(255,255,255,0.2);
-            background: rgba(255,255,255,0.05);
-            color: #fff;
-            border-radius: 12px;
+        .seg-btn {
+            flex: 1;
+            padding: 8px 16px;
+            border: none;
+            border-radius: 8px;
+            background: transparent;
+            color: #6e6e73;
+            font-size: 0.85rem;
+            font-weight: 500;
             cursor: pointer;
-            font-size: 1rem;
-            transition: all 0.3s;
+            transition: all 0.25s ease;
+            font-family: inherit;
         }
-        .mode-btn:hover { background: rgba(255,255,255,0.1); }
-        .mode-btn.active {
-            border-color: #ffd700;
-            background: rgba(255,215,0,0.15);
-            color: #ffd700;
-        }
-
-        /* 번호 선택 영역 */
-        .panel {
-            background: rgba(255,255,255,0.06);
-            border: 1px solid rgba(255,255,255,0.1);
-            border-radius: 16px;
-            padding: 2rem;
-            margin-bottom: 1.5rem;
-        }
-        .panel h2 {
-            font-size: 1.2rem;
-            margin-bottom: 1rem;
-            color: #ffd700;
+        .seg-btn.active {
+            background: #fff;
+            color: #1d1d1f;
+            box-shadow: 0 1px 4px rgba(0,0,0,0.1);
         }
 
-        /* 수동 번호판 */
+        /* ===== 번호판 ===== */
         .number-grid {
             display: grid;
             grid-template-columns: repeat(9, 1fr);
-            gap: 6px;
-            margin-bottom: 1rem;
+            gap: 8px;
+            margin-bottom: 16px;
         }
         .num-btn {
             width: 100%;
@@ -88,381 +171,423 @@
             border: none;
             border-radius: 50%;
             cursor: pointer;
-            font-size: 0.9rem;
-            font-weight: bold;
-            transition: all 0.2s;
+            font-size: 0.85rem;
+            font-weight: 600;
+            font-family: inherit;
+            transition: all 0.2s ease;
             display: flex;
             align-items: center;
             justify-content: center;
+            position: relative;
         }
-        .num-btn.range-1 { background: #fbc531; color: #000; }
-        .num-btn.range-2 { background: #4cd137; color: #000; }
-        .num-btn.range-3 { background: #e84118; color: #fff; }
-        .num-btn.range-4 { background: #7f8fa6; color: #fff; }
-        .num-btn.range-5 { background: #00a8ff; color: #fff; }
-        .num-btn:hover { transform: scale(1.15); opacity: 0.9; }
+        .num-btn.r1 { background: #fef3c7; color: #92400e; }
+        .num-btn.r2 { background: #d1fae5; color: #065f46; }
+        .num-btn.r3 { background: #fee2e2; color: #991b1b; }
+        .num-btn.r4 { background: #e5e7eb; color: #374151; }
+        .num-btn.r5 { background: #dbeafe; color: #1e40af; }
+        .num-btn:hover { transform: scale(1.12); }
         .num-btn.selected {
-            transform: scale(1.15);
-            box-shadow: 0 0 15px rgba(255,255,255,0.5);
-            outline: 3px solid #fff;
+            transform: scale(1.12);
+            box-shadow: 0 0 0 3px #007aff;
         }
         .num-btn.disabled {
-            opacity: 0.3;
+            opacity: 0.25;
             cursor: not-allowed;
-            transform: none;
+            transform: none !important;
         }
 
-        /* 선택된 번호 표시 */
+        /* ===== 선택된 번호 표시 ===== */
         .selected-numbers {
             display: flex;
             gap: 10px;
             justify-content: center;
-            margin: 1rem 0;
-            min-height: 50px;
+            margin: 16px 0;
+            min-height: 48px;
             align-items: center;
         }
-        .selected-ball {
-            width: 46px;
-            height: 46px;
+        .sel-ball {
+            width: 44px;
+            height: 44px;
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-weight: bold;
-            font-size: 1rem;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+            font-weight: 700;
+            font-size: 0.9rem;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.12);
         }
         .empty-slot {
-            width: 46px;
-            height: 46px;
+            width: 44px;
+            height: 44px;
             border-radius: 50%;
-            border: 2px dashed rgba(255,255,255,0.2);
+            border: 2px dashed rgba(0,0,0,0.1);
         }
 
-        /* 게임 슬롯 */
+        /* ===== 게임 슬롯 ===== */
         .game-slots {
             display: flex;
             flex-direction: column;
-            gap: 0.8rem;
-            margin-bottom: 1rem;
+            gap: 10px;
+            margin-bottom: 16px;
         }
         .game-slot {
             display: flex;
             align-items: center;
-            gap: 1rem;
-            padding: 0.8rem 1rem;
-            background: rgba(255,255,255,0.04);
-            border-radius: 10px;
-            border: 1px solid rgba(255,255,255,0.08);
+            gap: 12px;
+            padding: 12px 14px;
+            background: rgba(0,0,0,0.03);
+            border-radius: 14px;
+            transition: background 0.2s;
         }
+        .game-slot:hover { background: rgba(0,0,0,0.05); }
         .slot-label {
-            font-size: 0.85rem;
-            color: #aaa;
-            min-width: 40px;
+            font-size: 0.8rem;
+            color: #86868b;
+            font-weight: 600;
+            min-width: 20px;
         }
-        .slot-type {
-            font-size: 0.7rem;
+        .slot-tag {
+            font-size: 0.65rem;
             padding: 2px 8px;
-            border-radius: 4px;
-            min-width: 35px;
+            border-radius: 6px;
+            font-weight: 600;
+            min-width: 36px;
             text-align: center;
         }
-        .slot-type.auto { background: #00a8ff33; color: #00a8ff; }
-        .slot-type.manual { background: #ffd70033; color: #ffd700; }
+        .slot-tag.auto { background: #dbeafe; color: #1e40af; }
+        .slot-tag.manual { background: #fef3c7; color: #92400e; }
+        .slot-tag.semi { background: #d1fae5; color: #065f46; }
         .slot-numbers {
             display: flex;
             gap: 6px;
             flex: 1;
         }
         .slot-ball {
-            width: 36px;
-            height: 36px;
+            width: 34px;
+            height: 34px;
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-weight: bold;
-            font-size: 0.8rem;
+            font-weight: 700;
+            font-size: 0.75rem;
+            box-shadow: 0 1px 4px rgba(0,0,0,0.1);
         }
         .slot-remove {
             background: none;
             border: none;
-            color: #e84118;
+            color: #ff3b30;
             cursor: pointer;
-            font-size: 1.2rem;
-            padding: 0.3rem;
-            opacity: 0.6;
+            font-size: 1rem;
+            padding: 4px;
+            opacity: 0.5;
+            transition: opacity 0.2s;
         }
         .slot-remove:hover { opacity: 1; }
 
-        /* 버튼 */
+        /* ===== 버튼 ===== */
         .btn-row {
             display: flex;
-            gap: 1rem;
+            gap: 10px;
             justify-content: center;
             flex-wrap: wrap;
         }
         .btn {
-            padding: 0.8rem 2rem;
+            padding: 10px 24px;
             border: none;
             border-radius: 12px;
-            font-size: 1rem;
-            font-weight: bold;
-            cursor: pointer;
-            transition: all 0.3s;
-        }
-        .btn:hover { transform: translateY(-2px); }
-        .btn-primary {
-            background: linear-gradient(135deg, #ffd700, #ff6b35);
-            color: #000;
-        }
-        .btn-secondary {
-            background: rgba(255,255,255,0.1);
-            color: #fff;
-            border: 1px solid rgba(255,255,255,0.2);
-        }
-        .btn-danger {
-            background: rgba(232,65,24,0.2);
-            color: #e84118;
-            border: 1px solid rgba(232,65,24,0.3);
-        }
-        .btn-draw {
-            background: linear-gradient(135deg, #e84118, #c23616);
-            color: #fff;
-            font-size: 1.2rem;
-            padding: 1rem 3rem;
-        }
-        .btn:disabled {
-            opacity: 0.4;
-            cursor: not-allowed;
-            transform: none;
-        }
-
-        /* 추첨 결과 */
-        .result-section {
-            display: none;
-        }
-        .result-section.show { display: block; }
-        .winning-numbers {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 10px;
-            margin: 1.5rem 0;
-            flex-wrap: wrap;
-        }
-        .winning-ball {
-            width: 56px;
-            height: 56px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-weight: bold;
-            font-size: 1.2rem;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.4);
-            animation: popIn 0.4s ease-out backwards;
-        }
-        .bonus-separator {
-            font-size: 1.5rem;
-            color: #aaa;
-            margin: 0 5px;
-        }
-        .bonus-label {
-            font-size: 0.7rem;
-            color: #aaa;
-            text-align: center;
-        }
-        @keyframes popIn {
-            from { transform: scale(0); opacity: 0; }
-            to { transform: scale(1); opacity: 1; }
-        }
-
-        /* 결과 테이블 */
-        .result-table {
-            width: 100%;
-            border-collapse: collapse;
-            margin-top: 1rem;
-        }
-        .result-table th, .result-table td {
-            padding: 0.7rem;
-            text-align: center;
-            border-bottom: 1px solid rgba(255,255,255,0.08);
             font-size: 0.9rem;
+            font-weight: 600;
+            cursor: pointer;
+            font-family: inherit;
+            transition: all 0.2s ease;
+            letter-spacing: -0.01em;
         }
-        .result-table th {
-            color: #ffd700;
-            font-size: 0.8rem;
+        .btn:hover { transform: translateY(-1px); }
+        .btn:active { transform: scale(0.98); }
+        .btn-blue {
+            background: #007aff;
+            color: #fff;
         }
-        .result-match { color: #4cd137; }
-        .result-numbers {
-            display: flex;
-            gap: 4px;
-            justify-content: center;
+        .btn-blue:hover { background: #0066d6; }
+        .btn-gray {
+            background: rgba(0,0,0,0.06);
+            color: #1d1d1f;
         }
-        .result-mini-ball {
-            width: 28px;
-            height: 28px;
-            border-radius: 50%;
+        .btn-gray:hover { background: rgba(0,0,0,0.1); }
+        .btn-red {
+            background: rgba(255,59,48,0.1);
+            color: #ff3b30;
+        }
+        .btn-red:hover { background: rgba(255,59,48,0.18); }
+        .btn-draw {
+            background: linear-gradient(135deg, #007aff, #5856d6);
+            color: #fff;
+            font-size: 1.05rem;
+            padding: 14px 40px;
+            border-radius: 14px;
+        }
+        .btn-draw:hover { box-shadow: 0 4px 16px rgba(0,122,255,0.35); }
+        .btn:disabled {
+            opacity: 0.35;
+            cursor: not-allowed;
+            transform: none !important;
+            box-shadow: none !important;
+        }
+
+        /* ===== 수량 선택 ===== */
+        .qty-row {
             display: flex;
             align-items: center;
             justify-content: center;
-            font-weight: bold;
-            font-size: 0.65rem;
-        }
-        .result-mini-ball.matched {
-            outline: 2px solid #4cd137;
-            outline-offset: 2px;
-        }
-        .rank-badge {
-            padding: 3px 10px;
-            border-radius: 20px;
-            font-weight: bold;
-            font-size: 0.8rem;
-        }
-        .rank-1 { background: #ffd700; color: #000; }
-        .rank-2 { background: #c0c0c0; color: #000; }
-        .rank-3 { background: #cd7f32; color: #fff; }
-        .rank-4 { background: #4cd137; color: #000; }
-        .rank-5 { background: #00a8ff; color: #fff; }
-        .rank-none { background: rgba(255,255,255,0.1); color: #aaa; }
-
-        /* 통계 */
-        .stats {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-            gap: 1rem;
-            margin-top: 1.5rem;
-        }
-        .stat-card {
-            background: rgba(255,255,255,0.05);
-            border-radius: 12px;
-            padding: 1rem;
-            text-align: center;
-        }
-        .stat-value {
-            font-size: 1.5rem;
-            font-weight: bold;
-            color: #ffd700;
-        }
-        .stat-label {
-            font-size: 0.8rem;
-            color: #aaa;
-            margin-top: 0.3rem;
-        }
-
-        /* 수량 선택 */
-        .quantity-row {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 1rem;
-            margin: 1rem 0;
+            gap: 16px;
+            margin: 16px 0;
         }
         .qty-btn {
             width: 36px;
             height: 36px;
             border-radius: 50%;
-            border: 1px solid rgba(255,255,255,0.3);
-            background: rgba(255,255,255,0.05);
-            color: #fff;
+            border: none;
+            background: rgba(0,0,0,0.06);
+            color: #1d1d1f;
             font-size: 1.2rem;
             cursor: pointer;
+            font-family: inherit;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: background 0.2s;
         }
+        .qty-btn:hover { background: rgba(0,0,0,0.1); }
         .qty-display {
-            font-size: 1.3rem;
+            font-size: 1.5rem;
+            font-weight: 700;
             min-width: 30px;
             text-align: center;
         }
-
-        /* 금액 표시 */
-        .price-display {
+        .price-tag {
             text-align: center;
-            margin: 1rem 0;
-            font-size: 1.1rem;
-            color: #aaa;
+            margin: 8px 0 16px;
+            font-size: 0.9rem;
+            color: #86868b;
         }
-        .price-display span { color: #ffd700; font-weight: bold; }
+        .price-tag span { color: #1d1d1f; font-weight: 600; }
+
+        /* ===== 결과 섹션 ===== */
+        .result-section { display: none; }
+        .result-section.show { display: block; }
+
+        .winning-numbers {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            margin: 20px 0;
+            flex-wrap: wrap;
+        }
+        .win-ball {
+            width: 54px;
+            height: 54px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 1.15rem;
+            box-shadow: 0 4px 14px rgba(0,0,0,0.15);
+            animation: popIn 0.35s cubic-bezier(0.34, 1.56, 0.64, 1) backwards;
+        }
+        .bonus-sep {
+            font-size: 1.4rem;
+            color: #86868b;
+            font-weight: 300;
+            margin: 0 4px;
+        }
+        .bonus-label {
+            font-size: 0.65rem;
+            color: #86868b;
+            text-align: center;
+            font-weight: 500;
+            letter-spacing: 0.02em;
+        }
+        @keyframes popIn {
+            from { transform: scale(0) rotate(-20deg); opacity: 0; }
+            to { transform: scale(1) rotate(0); opacity: 1; }
+        }
+
+        /* ===== 결과 테이블 ===== */
+        .result-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 12px;
+        }
+        .result-table th {
+            padding: 8px;
+            text-align: center;
+            font-size: 0.75rem;
+            color: #86868b;
+            font-weight: 500;
+            text-transform: uppercase;
+            letter-spacing: 0.03em;
+            border-bottom: 1px solid rgba(0,0,0,0.06);
+        }
+        .result-table td {
+            padding: 10px 8px;
+            text-align: center;
+            font-size: 0.85rem;
+            border-bottom: 1px solid rgba(0,0,0,0.04);
+        }
+        .result-match { color: #34c759; font-weight: 600; }
+        .result-nums {
+            display: flex;
+            gap: 4px;
+            justify-content: center;
+        }
+        .mini-ball {
+            width: 26px;
+            height: 26px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 0.6rem;
+        }
+        .mini-ball.matched {
+            outline: 2.5px solid #34c759;
+            outline-offset: 2px;
+        }
+        .rank-pill {
+            display: inline-block;
+            padding: 3px 12px;
+            border-radius: 20px;
+            font-weight: 600;
+            font-size: 0.75rem;
+        }
+        .rank-1 { background: linear-gradient(135deg, #fbbf24, #f59e0b); color: #fff; }
+        .rank-2 { background: linear-gradient(135deg, #9ca3af, #6b7280); color: #fff; }
+        .rank-3 { background: linear-gradient(135deg, #d97706, #b45309); color: #fff; }
+        .rank-4 { background: #d1fae5; color: #065f46; }
+        .rank-5 { background: #dbeafe; color: #1e40af; }
+        .rank-none { background: rgba(0,0,0,0.04); color: #86868b; }
+
+        /* ===== 통계 카드 ===== */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+            gap: 12px;
+            margin-top: 20px;
+        }
+        .stat-card {
+            backdrop-filter: saturate(180%) blur(20px);
+            -webkit-backdrop-filter: saturate(180%) blur(20px);
+            background: rgba(255,255,255,0.72);
+            border: 0.5px solid rgba(0,0,0,0.08);
+            border-radius: 16px;
+            padding: 16px;
+            text-align: center;
+        }
+        .stat-value {
+            font-size: 1.35rem;
+            font-weight: 700;
+            color: #1d1d1f;
+            letter-spacing: -0.02em;
+        }
+        .stat-label {
+            font-size: 0.75rem;
+            color: #86868b;
+            margin-top: 4px;
+            font-weight: 500;
+        }
 
         @media (max-width: 600px) {
-            .number-grid { grid-template-columns: repeat(7, 1fr); }
+            .number-grid { grid-template-columns: repeat(7, 1fr); gap: 6px; }
             .num-btn { font-size: 0.75rem; }
-            .winning-ball { width: 44px; height: 44px; font-size: 1rem; }
+            .win-ball { width: 42px; height: 42px; font-size: 0.95rem; }
+            .container { padding: 0 0.75rem; }
+            .glass { padding: 20px; border-radius: 16px; }
         }
     </style>
 </head>
 <body>
+    <div class="bg">
+        <div class="orb orb-1"></div>
+        <div class="orb orb-2"></div>
+        <div class="orb orb-3"></div>
+        <div class="orb orb-4"></div>
+    </div>
+
     <div class="header">
         <a href="../index.html">← 게임센터</a>
         <h1>로또 6/45</h1>
-        <div></div>
+        <div style="width:70px"></div>
     </div>
 
     <div class="container">
         <!-- 모드 선택 -->
-        <div class="mode-selector">
-            <button class="mode-btn active" onclick="setMode('auto')">자동</button>
-            <button class="mode-btn" onclick="setMode('manual')">수동</button>
-            <button class="mode-btn" onclick="setMode('semi')">반자동</button>
+        <div class="segment-control">
+            <button class="seg-btn active" onclick="setMode('auto')">자동</button>
+            <button class="seg-btn" onclick="setMode('manual')">수동</button>
+            <button class="seg-btn" onclick="setMode('semi')">반자동</button>
         </div>
 
         <!-- 자동 모드 -->
-        <div id="auto-panel" class="panel">
+        <div id="auto-panel" class="glass">
             <h2>자동 번호 생성</h2>
-            <p style="color:#aaa; margin-bottom:1rem; font-size:0.9rem;">원하는 게임 수를 선택하세요 (최대 5게임)</p>
-            <div class="quantity-row">
+            <p class="desc">원하는 게임 수를 선택하세요 (최대 5게임)</p>
+            <div class="qty-row">
                 <button class="qty-btn" onclick="changeQty(-1)">−</button>
                 <div class="qty-display" id="qty-display">1</div>
                 <button class="qty-btn" onclick="changeQty(1)">+</button>
             </div>
-            <div class="price-display">금액: <span id="price-display">1,000원</span></div>
+            <div class="price-tag">금액: <span id="price-display">1,000원</span></div>
             <div class="btn-row">
-                <button class="btn btn-primary" onclick="addAutoGames()">자동 생성</button>
+                <button class="btn btn-blue" onclick="addAutoGames()">자동 생성</button>
             </div>
         </div>
 
         <!-- 수동 모드 -->
-        <div id="manual-panel" class="panel" style="display:none;">
+        <div id="manual-panel" class="glass" style="display:none;">
             <h2>수동 번호 선택</h2>
-            <p style="color:#aaa; margin-bottom:1rem; font-size:0.9rem;">6개의 번호를 직접 선택하세요 (1~45)</p>
+            <p class="desc">6개의 번호를 직접 선택하세요 (1~45)</p>
             <div class="selected-numbers" id="manual-selected"></div>
             <div class="number-grid" id="number-grid"></div>
             <div class="btn-row">
-                <button class="btn btn-secondary" onclick="clearManual()">초기화</button>
-                <button class="btn btn-primary" id="manual-confirm-btn" onclick="confirmManual()" disabled>선택 완료</button>
+                <button class="btn btn-gray" onclick="clearManual()">초기화</button>
+                <button class="btn btn-blue" id="manual-confirm-btn" onclick="confirmManual()" disabled>선택 완료</button>
             </div>
         </div>
 
         <!-- 반자동 모드 -->
-        <div id="semi-panel" class="panel" style="display:none;">
+        <div id="semi-panel" class="glass" style="display:none;">
             <h2>반자동 번호 선택</h2>
-            <p style="color:#aaa; margin-bottom:1rem; font-size:0.9rem;">일부 번호를 선택하면 나머지는 자동으로 채워집니다</p>
+            <p class="desc">일부 번호를 선택하면 나머지는 자동으로 채워집니다</p>
             <div class="selected-numbers" id="semi-selected"></div>
             <div class="number-grid" id="semi-number-grid"></div>
             <div class="btn-row">
-                <button class="btn btn-secondary" onclick="clearSemi()">초기화</button>
-                <button class="btn btn-primary" onclick="confirmSemi()">나머지 자동 생성</button>
+                <button class="btn btn-gray" onclick="clearSemi()">초기화</button>
+                <button class="btn btn-blue" onclick="confirmSemi()">나머지 자동 생성</button>
             </div>
         </div>
 
         <!-- 선택된 게임 목록 -->
-        <div class="panel" id="games-panel" style="display:none;">
-            <h2>선택한 게임 <span id="games-count"></span></h2>
+        <div class="glass" id="games-panel" style="display:none;">
+            <h2>선택한 게임 <span id="games-count" style="color:#86868b;font-weight:400;"></span></h2>
             <div class="game-slots" id="game-slots"></div>
-            <div class="price-display">총 금액: <span id="total-price">0원</span></div>
+            <div class="price-tag">총 금액: <span id="total-price">0원</span></div>
             <div class="btn-row">
-                <button class="btn btn-danger" onclick="clearAllGames()">전체 삭제</button>
+                <button class="btn btn-red" onclick="clearAllGames()">전체 삭제</button>
                 <button class="btn btn-draw" id="draw-btn" onclick="startDraw()">추첨하기</button>
             </div>
         </div>
 
         <!-- 추첨 결과 -->
         <div class="result-section" id="result-section">
-            <div class="panel">
+            <div class="glass">
                 <h2>당첨 번호</h2>
                 <div class="winning-numbers" id="winning-numbers"></div>
             </div>
-            <div class="panel">
+            <div class="glass">
                 <h2>내 결과</h2>
                 <table class="result-table">
                     <thead>
@@ -477,9 +602,9 @@
                     <tbody id="result-body"></tbody>
                 </table>
             </div>
-            <div class="stats" id="stats"></div>
-            <div class="btn-row" style="margin-top:1.5rem;">
-                <button class="btn btn-secondary" onclick="resetAll()">다시 하기</button>
+            <div class="stats-grid" id="stats"></div>
+            <div class="btn-row" style="margin-top:20px;">
+                <button class="btn btn-gray" onclick="resetAll()">다시 하기</button>
             </div>
         </div>
     </div>
@@ -492,30 +617,33 @@
         let games = [];
         const MAX_GAMES = 5;
 
-        // 공 색상
+        // 공 색상 (Apple 스타일 — 밝고 부드러운 톤)
         function getBallColor(num) {
-            if (num <= 10) return '#fbc531';
-            if (num <= 20) return '#4cd137';
-            if (num <= 30) return '#e84118';
-            if (num <= 40) return '#7f8fa6';
-            return '#00a8ff';
+            if (num <= 10) return '#fbbf24';
+            if (num <= 20) return '#34d399';
+            if (num <= 30) return '#f87171';
+            if (num <= 40) return '#9ca3af';
+            return '#60a5fa';
         }
         function getBallTextColor(num) {
-            if (num <= 10 || num <= 20) return '#000';
+            if (num <= 10) return '#78350f';
+            if (num <= 20) return '#064e3b';
+            if (num <= 30) return '#fff';
+            if (num <= 40) return '#fff';
             return '#fff';
         }
         function getRangeClass(num) {
-            if (num <= 10) return 'range-1';
-            if (num <= 20) return 'range-2';
-            if (num <= 30) return 'range-3';
-            if (num <= 40) return 'range-4';
-            return 'range-5';
+            if (num <= 10) return 'r1';
+            if (num <= 20) return 'r2';
+            if (num <= 30) return 'r3';
+            if (num <= 40) return 'r4';
+            return 'r5';
         }
 
         // 모드 전환
         function setMode(mode) {
             currentMode = mode;
-            document.querySelectorAll('.mode-btn').forEach((btn, i) => {
+            document.querySelectorAll('.seg-btn').forEach((btn, i) => {
                 btn.classList.toggle('active',
                     (mode === 'auto' && i === 0) ||
                     (mode === 'manual' && i === 1) ||
@@ -527,7 +655,7 @@
             document.getElementById('semi-panel').style.display = mode === 'semi' ? 'block' : 'none';
         }
 
-        // 숫자 그리드 생성
+        // 숫자 그리드
         function createNumberGrid(containerId, clickHandler) {
             const grid = document.getElementById(containerId);
             grid.innerHTML = '';
@@ -541,29 +669,22 @@
             }
         }
 
-        // 공 HTML 생성
-        function createBallHTML(num, size = 'normal', matched = false) {
-            const cls = size === 'mini' ? 'result-mini-ball' : (size === 'winning' ? 'winning-ball' : 'selected-ball');
-            const matchedCls = matched ? ' matched' : '';
-            return `<div class="${cls}${matchedCls}" style="background:${getBallColor(num)}; color:${getBallTextColor(num)}">${num}</div>`;
+        // 공 HTML
+        function ballHTML(num, cls, matched) {
+            const mcls = matched ? ' matched' : '';
+            return `<div class="${cls}${mcls}" style="background:${getBallColor(num)};color:${getBallTextColor(num)}">${num}</div>`;
         }
 
-        // 빈 슬롯 HTML
-        function createEmptySlot() {
-            return '<div class="empty-slot"></div>';
-        }
-
-        // 선택 표시 업데이트
         function updateSelectedDisplay(containerId, numbers, total = 6) {
-            const container = document.getElementById(containerId);
+            const el = document.getElementById(containerId);
             let html = '';
             for (let i = 0; i < total; i++) {
-                html += numbers[i] ? createBallHTML(numbers[i]) : createEmptySlot();
+                html += numbers[i] ? ballHTML(numbers[i], 'sel-ball') : '<div class="empty-slot"></div>';
             }
-            container.innerHTML = html;
+            el.innerHTML = html;
         }
 
-        // 랜덤 번호 생성
+        // 랜덤 번호 (정렬)
         function generateRandomNumbers(exclude = [], count = 6) {
             const available = [];
             for (let i = 1; i <= 45; i++) {
@@ -578,14 +699,22 @@
             return result.sort((a, b) => a - b);
         }
 
-        // 자동 수량 변경
+        // 보너스 번호 별도 생성 (정렬 문제 수정)
+        function generateBonusNumber(mainNumbers) {
+            let bonus;
+            do {
+                bonus = Math.floor(Math.random() * 45) + 1;
+            } while (mainNumbers.includes(bonus));
+            return bonus;
+        }
+
+        // 자동 수량
         function changeQty(delta) {
             autoQty = Math.max(1, Math.min(MAX_GAMES - games.length, autoQty + delta));
             document.getElementById('qty-display').textContent = autoQty;
             document.getElementById('price-display').textContent = (autoQty * 1000).toLocaleString() + '원';
         }
 
-        // 자동 게임 추가
         function addAutoGames() {
             if (games.length >= MAX_GAMES) return alert('최대 5게임까지 가능합니다.');
             const count = Math.min(autoQty, MAX_GAMES - games.length);
@@ -610,15 +739,9 @@
             }
             updateSelectedDisplay('manual-selected', manualNumbers);
             document.getElementById('manual-confirm-btn').disabled = manualNumbers.length !== 6;
-
-            // 6개 선택 시 나머지 비활성화
             document.querySelectorAll('#number-grid .num-btn').forEach(b => {
                 const n = parseInt(b.dataset.num);
-                if (manualNumbers.length >= 6 && !manualNumbers.includes(n)) {
-                    b.classList.add('disabled');
-                } else {
-                    b.classList.remove('disabled');
-                }
+                b.classList.toggle('disabled', manualNumbers.length >= 6 && !manualNumbers.includes(n));
             });
         });
 
@@ -626,9 +749,7 @@
             manualNumbers = [];
             updateSelectedDisplay('manual-selected', []);
             document.getElementById('manual-confirm-btn').disabled = true;
-            document.querySelectorAll('#number-grid .num-btn').forEach(b => {
-                b.classList.remove('selected', 'disabled');
-            });
+            document.querySelectorAll('#number-grid .num-btn').forEach(b => b.classList.remove('selected', 'disabled'));
         }
 
         function confirmManual() {
@@ -650,167 +771,124 @@
                 btn.classList.add('selected');
             }
             updateSelectedDisplay('semi-selected', semiNumbers);
-
             document.querySelectorAll('#semi-number-grid .num-btn').forEach(b => {
                 const n = parseInt(b.dataset.num);
-                if (semiNumbers.length >= 5 && !semiNumbers.includes(n)) {
-                    b.classList.add('disabled');
-                } else {
-                    b.classList.remove('disabled');
-                }
+                b.classList.toggle('disabled', semiNumbers.length >= 5 && !semiNumbers.includes(n));
             });
         });
 
         function clearSemi() {
             semiNumbers = [];
             updateSelectedDisplay('semi-selected', []);
-            document.querySelectorAll('#semi-number-grid .num-btn').forEach(b => {
-                b.classList.remove('selected', 'disabled');
-            });
+            document.querySelectorAll('#semi-number-grid .num-btn').forEach(b => b.classList.remove('selected', 'disabled'));
         }
 
         function confirmSemi() {
             if (semiNumbers.length === 0) return alert('최소 1개 이상의 번호를 선택하세요.');
             if (games.length >= MAX_GAMES) return alert('최대 5게임까지 가능합니다.');
-            const fullNumbers = generateRandomNumbers(semiNumbers);
-            games.push({ type: 'semi', numbers: fullNumbers });
+            games.push({ type: 'semi', numbers: generateRandomNumbers(semiNumbers) });
             clearSemi();
             updateGameSlots();
         }
 
-        // 게임 슬롯 업데이트
+        // 게임 슬롯
         function updateGameSlots() {
             const panel = document.getElementById('games-panel');
             const slotsDiv = document.getElementById('game-slots');
-
-            if (games.length === 0) {
-                panel.style.display = 'none';
-                return;
-            }
+            if (games.length === 0) { panel.style.display = 'none'; return; }
             panel.style.display = 'block';
             document.getElementById('games-count').textContent = `(${games.length}/5)`;
             document.getElementById('total-price').textContent = (games.length * 1000).toLocaleString() + '원';
 
-            slotsDiv.innerHTML = games.map((game, i) => {
-                const typeLabel = game.type === 'auto' ? '자동' : game.type === 'manual' ? '수동' : '반자동';
-                const typeClass = game.type === 'manual' || game.type === 'semi' ? 'manual' : 'auto';
-                return `
-                    <div class="game-slot">
-                        <span class="slot-label">${String.fromCharCode(65 + i)}</span>
-                        <span class="slot-type ${typeClass}">${typeLabel}</span>
-                        <div class="slot-numbers">
-                            ${game.numbers.map(n => `<div class="slot-ball" style="background:${getBallColor(n)};color:${getBallTextColor(n)}">${n}</div>`).join('')}
-                        </div>
-                        <button class="slot-remove" onclick="removeGame(${i})">✕</button>
+            slotsDiv.innerHTML = games.map((g, i) => {
+                const labels = { auto: '자동', manual: '수동', semi: '반자동' };
+                return `<div class="game-slot">
+                    <span class="slot-label">${String.fromCharCode(65 + i)}</span>
+                    <span class="slot-tag ${g.type}">${labels[g.type]}</span>
+                    <div class="slot-numbers">
+                        ${g.numbers.map(n => `<div class="slot-ball" style="background:${getBallColor(n)};color:${getBallTextColor(n)}">${n}</div>`).join('')}
                     </div>
-                `;
+                    <button class="slot-remove" onclick="removeGame(${i})">✕</button>
+                </div>`;
             }).join('');
-
-            changeQty(0); // recalc max
+            changeQty(0);
         }
 
-        function removeGame(index) {
-            games.splice(index, 1);
-            updateGameSlots();
-        }
-
-        function clearAllGames() {
-            games = [];
-            updateGameSlots();
-        }
+        function removeGame(i) { games.splice(i, 1); updateGameSlots(); }
+        function clearAllGames() { games = []; updateGameSlots(); }
 
         // 추첨
         function startDraw() {
             if (games.length === 0) return;
 
-            // 당첨 번호 생성
-            const allWinning = generateRandomNumbers([], 7); // 6 + bonus
-            const mainNumbers = allWinning.slice(0, 6);
-            const bonusNumber = allWinning[6] || generateBonusNumber(mainNumbers);
+            // 당첨 번호: 6개 메인 + 별도 보너스
+            const mainNumbers = generateRandomNumbers([], 6);
+            const bonusNumber = generateBonusNumber(mainNumbers);
 
-            // 당첨 번호 표시
+            // 당첨 번호 표시 (innerHTML 누적 대신 DOM append)
             const winDiv = document.getElementById('winning-numbers');
             winDiv.innerHTML = '';
+
             mainNumbers.forEach((num, i) => {
                 setTimeout(() => {
-                    winDiv.innerHTML += createBallHTML(num, 'winning');
+                    winDiv.insertAdjacentHTML('beforeend', ballHTML(num, 'win-ball'));
+                    // 마지막 번호 뒤에 보너스 추가
                     if (i === 5) {
                         setTimeout(() => {
-                            winDiv.innerHTML += '<div class="bonus-separator">+</div>';
-                            winDiv.innerHTML += `<div style="text-align:center"><div class="bonus-label">보너스</div>${createBallHTML(bonusNumber, 'winning')}</div>`;
+                            winDiv.insertAdjacentHTML('beforeend',
+                                `<div class="bonus-sep">+</div>
+                                 <div style="text-align:center">
+                                     <div class="bonus-label">보너스</div>
+                                     ${ballHTML(bonusNumber, 'win-ball')}
+                                 </div>`
+                            );
                         }, 300);
                     }
-                }, i * 300);
+                }, i * 280);
             });
 
-            // 결과 계산
-            setTimeout(() => {
-                showResults(mainNumbers, bonusNumber);
-            }, 2200);
+            setTimeout(() => showResults(mainNumbers, bonusNumber), 2100);
 
             document.getElementById('result-section').classList.add('show');
             document.getElementById('draw-btn').disabled = true;
-
-            // 스크롤
-            setTimeout(() => {
-                document.getElementById('result-section').scrollIntoView({ behavior: 'smooth' });
-            }, 500);
-        }
-
-        function generateBonusNumber(mainNumbers) {
-            let bonus;
-            do {
-                bonus = Math.floor(Math.random() * 45) + 1;
-            } while (mainNumbers.includes(bonus));
-            return bonus;
+            setTimeout(() => document.getElementById('result-section').scrollIntoView({ behavior: 'smooth' }), 500);
         }
 
         function showResults(mainNumbers, bonusNumber) {
             const tbody = document.getElementById('result-body');
             let totalPrize = 0;
-            const rankCounts = { 1: 0, 2: 0, 3: 0, 4: 0, 5: 0 };
 
             tbody.innerHTML = games.map((game, i) => {
                 const matchCount = game.numbers.filter(n => mainNumbers.includes(n)).length;
                 const hasBonus = game.numbers.includes(bonusNumber);
 
-                let rank, prize, rankClass;
-                if (matchCount === 6) {
-                    rank = 1; prize = 2000000000; rankClass = 'rank-1';
-                } else if (matchCount === 5 && hasBonus) {
-                    rank = 2; prize = 60000000; rankClass = 'rank-2';
-                } else if (matchCount === 5) {
-                    rank = 3; prize = 1500000; rankClass = 'rank-3';
-                } else if (matchCount === 4) {
-                    rank = 4; prize = 50000; rankClass = 'rank-4';
-                } else if (matchCount === 3) {
-                    rank = 5; prize = 5000; rankClass = 'rank-5';
-                } else {
-                    rank = 0; prize = 0; rankClass = 'rank-none';
-                }
+                let rank, prize, rc;
+                if (matchCount === 6) { rank = 1; prize = 2000000000; rc = 'rank-1'; }
+                else if (matchCount === 5 && hasBonus) { rank = 2; prize = 60000000; rc = 'rank-2'; }
+                else if (matchCount === 5) { rank = 3; prize = 1500000; rc = 'rank-3'; }
+                else if (matchCount === 4) { rank = 4; prize = 50000; rc = 'rank-4'; }
+                else if (matchCount === 3) { rank = 5; prize = 5000; rc = 'rank-5'; }
+                else { rank = 0; prize = 0; rc = 'rank-none'; }
 
                 totalPrize += prize;
-                if (rank > 0) rankCounts[rank]++;
 
-                const numbersHTML = game.numbers.map(n => {
-                    const isMatched = mainNumbers.includes(n);
-                    const isBonusMatch = n === bonusNumber;
-                    return createBallHTML(n, 'mini', isMatched || isBonusMatch);
+                const numsHTML = game.numbers.map(n => {
+                    const matched = mainNumbers.includes(n) || n === bonusNumber;
+                    return ballHTML(n, 'mini-ball', matched);
                 }).join('');
 
-                return `
-                    <tr>
-                        <td>${String.fromCharCode(65 + i)}</td>
-                        <td><div class="result-numbers">${numbersHTML}</div></td>
-                        <td class="result-match">${matchCount}개${hasBonus ? '+보너스' : ''}</td>
-                        <td><span class="rank-badge ${rankClass}">${rank > 0 ? rank + '등' : '낙첨'}</span></td>
-                        <td>${prize > 0 ? prize.toLocaleString() + '원' : '-'}</td>
-                    </tr>
-                `;
+                return `<tr>
+                    <td>${String.fromCharCode(65 + i)}</td>
+                    <td><div class="result-nums">${numsHTML}</div></td>
+                    <td class="result-match">${matchCount}개${hasBonus ? '+보너스' : ''}</td>
+                    <td><span class="rank-pill ${rc}">${rank > 0 ? rank + '등' : '낙첨'}</span></td>
+                    <td>${prize > 0 ? prize.toLocaleString() + '원' : '−'}</td>
+                </tr>`;
             }).join('');
 
             const spent = games.length * 1000;
             const profit = totalPrize - spent;
+            const profitColor = profit >= 0 ? '#34c759' : '#ff3b30';
 
             document.getElementById('stats').innerHTML = `
                 <div class="stat-card">
@@ -822,14 +900,13 @@
                     <div class="stat-label">당첨 금액</div>
                 </div>
                 <div class="stat-card">
-                    <div class="stat-value" style="color:${profit >= 0 ? '#4cd137' : '#e84118'}">${profit >= 0 ? '+' : ''}${profit.toLocaleString()}원</div>
+                    <div class="stat-value" style="color:${profitColor}">${profit >= 0 ? '+' : ''}${profit.toLocaleString()}원</div>
                     <div class="stat-label">수익</div>
                 </div>
                 <div class="stat-card">
-                    <div class="stat-value" style="color:${profit >= 0 ? '#4cd137' : '#e84118'}">${spent > 0 ? ((totalPrize / spent * 100).toFixed(1)) : 0}%</div>
+                    <div class="stat-value" style="color:${profitColor}">${spent > 0 ? (totalPrize / spent * 100).toFixed(1) : 0}%</div>
                     <div class="stat-label">수익률</div>
-                </div>
-            `;
+                </div>`;
         }
 
         function resetAll() {
