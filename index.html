@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>게임센터</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #0f0c29, #302b63, #24243e);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            color: #fff;
+        }
+        h1 {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            text-shadow: 0 0 20px rgba(255,255,255,0.3);
+        }
+        .subtitle {
+            color: #aaa;
+            margin-bottom: 3rem;
+            font-size: 1.1rem;
+        }
+        .games {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            max-width: 800px;
+            width: 90%;
+        }
+        .game-card {
+            background: rgba(255,255,255,0.08);
+            border: 1px solid rgba(255,255,255,0.15);
+            border-radius: 20px;
+            padding: 2.5rem 2rem;
+            text-align: center;
+            text-decoration: none;
+            color: #fff;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(10px);
+        }
+        .game-card:hover {
+            transform: translateY(-8px);
+            background: rgba(255,255,255,0.15);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+        }
+        .game-icon { font-size: 4rem; margin-bottom: 1rem; }
+        .game-card h2 { font-size: 1.5rem; margin-bottom: 0.5rem; }
+        .game-card p { color: #aaa; font-size: 0.95rem; line-height: 1.5; }
+    </style>
+</head>
+<body>
+    <h1>Game Center</h1>
+    <p class="subtitle">재미있는 시뮬레이터를 즐겨보세요!</p>
+    <div class="games">
+        <a href="lotto/index.html" class="game-card">
+            <div class="game-icon">🎱</div>
+            <h2>로또 시뮬레이터</h2>
+            <p>한국 로또 6/45<br>자동 & 수동으로 번호를 선택하고<br>당첨을 확인해보세요!</p>
+        </a>
+        <a href="ticketing/index.html" class="game-card">
+            <div class="game-icon">🎫</div>
+            <h2>티켓팅 시뮬레이터</h2>
+            <p>인터파크 스타일 티켓팅!<br>좌석 선택부터 결제까지<br>실전처럼 체험해보세요!</p>
+        </a>
+    </div>
+</body>
+</html>
